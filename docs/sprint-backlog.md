@@ -6,13 +6,11 @@ When a sprint closes, clear this file and pull the next batch. Shipped items don
 
 ## Sprint theme
 
-Design uplift v1 — fix the visual issues holding the site back (legibility, hierarchy, grid, motion, mobile) so the portfolio reads as a *designed* personal site rather than a good-but-default static site. Success: all four pages feel intentional at desktop *and* phone widths.
+*(Sprint cleared — design uplift v1 shipped 2026-05-08. Next sprint to be themed when the next batch of work is queued up.)*
 
 ## Active
 
-Shipping order: mobile → legibility → polish. Mobile is the blocker; legibility removes visual noise that makes polish hard to evaluate; polish is dessert.
-
-- **Design Polish** · `polish` · P2 Design. Play bento grid, typography hierarchy, hero credit treatment, cursor wayfinding. *Plan: `plans/active/2026-05-08-design-polish.md`.*
+*(None.)*
 
 ## Blocked / carry-over (long-running)
 
@@ -22,4 +20,8 @@ Shipping order: mobile → legibility → polish. Mobile is the blocker; legibil
 
 ## Last cleared
 
-<!-- After a sprint closes, the close-out summary lands here as a record of what shipped. Replace on next sprint close. -->
+### Sprint: Design Uplift v1 — closed 2026-05-08
+
+Shipped three plans in sequence: mobile-responsive → legibility-and-motion → design-polish. All four pages now render cleanly at desktop, tablet, and phone widths; inner pages have a proper figure-vs-ground via global background dim; cards stagger in with motion; bento grid is deliberately asymmetric; typography hierarchy expanded across the type scale.
+
+Plans (all in `plans/shipped/`): `2026-05-08-mobile-responsive.md`, `2026-05-08-legibility-and-motion.md`, `2026-05-08-design-polish.md`. System doc: `docs/systems/visual-system.md`.

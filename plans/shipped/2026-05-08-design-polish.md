@@ -4,7 +4,7 @@
 - [x] Drafting
 - [x] Approved to start
 - [x] In progress
-- [ ] Shipped
+- [x] Shipped
 - [ ] Cancelled
 
 ## Decisions (locked at preflight)
@@ -80,16 +80,21 @@ CSS / minor HTML — git revert.
 ## Session log
 
 ### Session 1 — 2026-05-08
-**Goal:** ...
+**Goal:** The "make it yours" pass — bento rhythm, typography hierarchy, hero credit treatment, cursor wayfinding.
 
 **Shipped:**
-- ...
+- Bento grid restored to deliberate asymmetric layout: `grid-template-rows: 200px 200px auto`. Image cells (Baltimore, Family, Maya) anchor the top two rows; text cells (Video Games, Other Interests) run wide along the bottom. The dead-space problem that was solved earlier (by removing `margin-top: auto` on `.bento-cta`) means explicit row heights and content-flowing CTAs work together now.
+- Typography hierarchy bumped: year markers promoted from 0.75rem uppercase to 1.5rem display font (Tenor Sans) with `letter-spacing: 0.06em` and 0.85 opacity — they read as temporal anchors. Role titles 1.15rem → 1.35rem with tighter line-height. Company names tightened (smaller, more letter-spacing, more bottom margin). Body description dropped 0.88rem → 0.85rem and opacity 0.85 → 0.78 to give the role more contrast.
+- `aria-current="page"` added to all four nav links across `index.html`, `work.html`, `play.html`, `contact.html`. Useful for screen readers regardless of the dropped visual swap.
+- One commit pushed: `47726cd design polish — bento rhythm + typography hierarchy`.
 
 **Didn't ship / blocked:**
-- ...
+- **Hero credit treatment — dropped at preflight.** Bryan likes the current treatment; the "museum-label" idea wasn't worth chasing.
+- **Cursor wayfinding — dropped mid-session.** Discovered during implementation that the existing `.cursor` rules already use coral default + teal-on-hover for an existing wayfinding/interaction signal. The proposed swap (teal default, coral on active) would have flipped the look in a way that competed with the existing hover state and solved a problem that doesn't exist on a 4-page site. The HTML attributes were kept (still useful for accessibility); the CSS swap was scrapped.
 
 **Tech debt introduced:**
-- ...
+- None new. `docs/systems/visual-system.md` is the next piece of work — it should be created now to capture the cumulative state across all three design uplift plans.
+- Eventually `.claude/rules/styles.md` should codify: desktop-first responsive (additive `@media` blocks), motion respects `prefers-reduced-motion`, frosted-glass card pattern, and the typography pattern (display font for prominent text, body font for utility text).
 
 **Next session's first move:**
-- ...
+- Create `docs/systems/visual-system.md` capturing the design system as it stands. Then deploy: configure DNS for `bmtuer.com` (purchased) and host the static site somewhere free (Cloudflare Pages, Netlify, Vercel — pick one).
