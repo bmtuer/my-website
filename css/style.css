@@ -226,6 +226,11 @@ img {
 }
 
 /* ── Nav hero override ── */
+/* Nameplate is smaller on inner pages so the card is the visual lead. */
+.hero-page .nav-name {
+  font-size: 3.5rem;
+}
+
 .hero-page .nav-name-last {
   -webkit-text-stroke-color: var(--text);
 }
@@ -257,12 +262,14 @@ img {
   z-index: -1;
 }
 
+/* Inner-page background: global dim so cards win against the skyline.
+   Home's .hero stays bright; only .bg-wrap (inner pages) is darkened. */
 .bg-wrap .hero-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 40%;
-  filter: saturate(0.6) brightness(0.85);
+  filter: saturate(0.45) brightness(0.55);
 }
 
 .bg-wrap .hero-overlay {
@@ -270,10 +277,10 @@ img {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(240, 235, 227, 0.85) 0%,
-    rgba(240, 235, 227, 0.35) 30%,
-    rgba(0, 0, 0, 0) 60%,
-    rgba(0, 0, 0, 0.5) 100%
+    rgba(240, 235, 227, 0.7) 0%,
+    rgba(0, 0, 0, 0.25) 30%,
+    rgba(0, 0, 0, 0.35) 60%,
+    rgba(0, 0, 0, 0.55) 100%
   );
 }
 
@@ -438,6 +445,14 @@ img {
   box-shadow:
     0 2px 12px rgba(0, 0, 0, 0.14),
     0 0 0 1px rgba(255, 255, 255, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.timeline-image:hover {
+  transform: scale(1.06);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.8);
 }
 
 .timeline-image img {
@@ -1222,6 +1237,57 @@ img {
 
   .hero-page .hero-credit a {
     color: var(--bg);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   Card stagger fade-in
+   Fires after the body fade (0.35s) completes, then ~80ms between cards.
+   ════════════════════════════════════════════════════════════════════ */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Work timeline cards */
+.timeline-item {
+  opacity: 0;
+  animation: fade-up 0.45s ease forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.40s; }
+.timeline-item:nth-child(2) { animation-delay: 0.48s; }
+.timeline-item:nth-child(3) { animation-delay: 0.56s; }
+.timeline-item:nth-child(4) { animation-delay: 0.64s; }
+.timeline-item:nth-child(5) { animation-delay: 0.72s; }
+.timeline-item:nth-child(6) { animation-delay: 0.80s; }
+
+/* Play bento cards */
+.bento-cell {
+  opacity: 0;
+  animation: fade-up 0.45s ease forwards;
+}
+
+.bento-cell:nth-child(1) { animation-delay: 0.40s; }
+.bento-cell:nth-child(2) { animation-delay: 0.48s; }
+.bento-cell:nth-child(3) { animation-delay: 0.56s; }
+.bento-cell:nth-child(4) { animation-delay: 0.64s; }
+.bento-cell:nth-child(5) { animation-delay: 0.72s; }
+.bento-cell:nth-child(6) { animation-delay: 0.80s; }
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .timeline-item,
+  .bento-cell {
+    opacity: 1;
+    animation: none;
   }
 }
 

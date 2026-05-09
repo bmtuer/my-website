@@ -2,10 +2,18 @@
 
 ## Status
 - [x] Drafting
-- [ ] Approved to start
-- [ ] In progress
+- [x] Approved to start
+- [x] In progress
 - [ ] Shipped
 - [ ] Cancelled
+
+## Decisions (locked at preflight)
+
+- **Background dim:** Global dim on inner pages (not vignette). The photo becomes atmospheric; card sits on it naturally.
+- **Card opacity:** Stay frosted at 0.93. The frosted-glass effect is load-bearing aesthetic; bumping to 0.97 would erase it. Lean on global dim for legibility.
+- **Nameplate on inner pages:** Shrink to ~3.5rem. Keeps Home's 5.5rem feeling more important by contrast. The "large with intentional overlap" move belongs in design-polish if pursued.
+- **Stagger timing:** ~80ms between cards, offset by 0.35s so it fires after the body fade-in completes.
+- **Hover scope:** `.timeline-image` only — `transform: scale(1.06)` + subtle box-shadow lift, 0.2s ease. Whole-item hover would imply false clickability.
 
 ## Problem
 On Work / Play / Contact, the cream cards have to fight a busy skyline behind them — figure-vs-ground is murky and content has to work too hard. Add subtle motion (staggered card entrance, hover states) to lift perceived quality. Resolves the "make it not broken on desktop" cluster.
