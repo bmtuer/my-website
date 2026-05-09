@@ -1,0 +1,48 @@
+# {{PROJECT_NAME}} — Architecture
+
+> The "why" behind the rules in CLAUDE.md and `.claude/rules/`. Read this when onboarding to the codebase or when a rule needs to be questioned.
+
+## Stack
+
+<!-- Fill in your stack as it stabilizes. Example structure:
+- **Client:** Framework + key libraries
+- **Server:** Runtime + framework
+- **Database:** Authoritative store
+- **Auth:** Identity provider
+- **Testing:** Test runners
+- **Monitoring:** Error tracking + logging
+-->
+
+## Core design principles
+
+> Add principles as they emerge from real decisions. Don't pre-fill — principles earn their place by being load-bearing.
+
+<!-- Examples of what a principle entry looks like:
+
+### 1. State authority is clear
+[Project-specific] is the source of truth for [type of state]. [Cache layer] is a cache that can be wiped and rebuilt. [Authority direction]. This is non-negotiable.
+
+Rationale: [why this matters for THIS project — anti-cheat? consistency? debugging? performance?]
+
+### 2. [Next principle]
+...
+
+-->
+
+## File structure landmarks
+
+<!-- Fill in as your structure stabilizes. Example:
+- `src/`: client code
+- `server/`: server code
+- `data/`: static content (JSON / YAML / etc.)
+- `tests/`: test suites
+- `scripts/`: dev automation
+- `docs/`: this file lives here, alongside roadmap, sprint-backlog, plan-template, systems references
+- `plans/`: per-feature plan files (active + shipped)
+-->
+
+## What's next
+
+See `docs/roadmap.md` for the canonical forward-looking backlog. See `docs/sprint-backlog.md` for the current sprint. See `docs/systems/` for living references of what exists today.
+
+This doc intentionally doesn't replicate that content — the roadmap changes sprint-to-sprint, but the architectural principles above should change rarely.

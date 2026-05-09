@@ -1,0 +1,51 @@
+# {{PROJECT_NAME}} — Roadmap
+
+> Single forward-looking backlog. When a thing ships, it **comes off this list**. The record lives in commit history, the plan file in `plans/shipped/`, and the relevant `docs/systems/*.md`.
+
+## How to read this
+
+Every roadmap item carries three orthogonal tags: **Workstream** (where the work lives — see [Workstreams](#workstreams)), **Priority** (importance within its milestone), and **Milestone** (the shipping arc it belongs to, optional).
+
+**Priority bands (importance *within the item's milestone*):**
+
+- **P0** — Foundation. Must exist before anything else in the milestone is buildable or shippable.
+- **P1** — Core deliverable. Together with P0 items, P1 items constitute "the milestone has shipped its v1."
+- **P2** — Round-out. Completes the milestone but the milestone reads as shipped without it.
+- **P3** — Optional / decision-gated / speculative.
+
+**Type tags:** `system` (plumbing) · `feature` (new user-facing capability) · `content` (more of an existing thing) · `polish` (improving what already works)
+
+**Markers:**
+- `[milestone: Name]` — the shipping arc this item belongs to. Exactly one per item; items without a milestone are Backlog.
+- `[depends-on: Milestone Name]` — hard dependency on another milestone.
+- `[needs-decision]` — blocked on a design call.
+- `[blocked-by: ...]` — blocked on something specific.
+
+## Workstreams
+
+<!-- Replaced by the bootstrap with the user's confirmed workstream list, formatted as:
+- [Workstream A](#workstream-a) — one-line description
+- [Workstream B](#workstream-b) — one-line description
+-->
+
+{{WORKSTREAMS_LIST}}
+
+---
+
+<!-- The bootstrap creates one section per workstream, following this shape. Add items as the project grows.
+
+## {{WORKSTREAM_NAME}}
+
+### P0 — Foundation within milestone
+
+- **Item title** · `type` `[milestone: ...]` `[depends-on: ...]`. Description of the item — what it is, why it matters, what it produces. *`[needs-decision: ...]` if applicable.*
+
+### P1 — Core deliverables within milestone
+...
+
+### P2 — Round-out within milestone
+...
+
+### P3 — Optional / decision-gated
+...
+-->

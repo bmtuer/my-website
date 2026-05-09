@@ -1,0 +1,72 @@
+# {{PROJECT_NAME}} — Engineering Constitution
+
+> Primary AI context for Claude. Keep this file short and authoritative. Detailed context lives in linked files below and is loaded only when relevant.
+
+## What this is
+
+{{PROJECT_DESCRIPTION}}
+
+## Where to look
+
+**Start here:**
+- **@docs/roadmap.md** — Forward-looking backlog, workstream-tagged. Single source of truth for "what's next."
+- **@docs/sprint-backlog.md** — Current sprint whiteboard. Items from roadmap that are active or imminent.
+- **@plans/active/** — In-progress non-trivial work. Each plan file is one feature/initiative. Read the relevant plan before touching substantial work in that area.
+- **@docs/systems/** — Living reference for existing systems. Populated organically as features ship. See `docs/systems/README.md` for the convention.
+
+**Context when you need it:**
+- **@docs/architecture.md** — High-level architectural principles and the "why" behind the rules.
+- **@docs/plan-template.md** — Template for new plans.
+
+## Hard rules (non-negotiable)
+
+> Append-only. When you identify a rule that should be codified, propose adding it.
+
+{{HARD_RULES}}
+
+## Working lifecycle
+
+Every non-trivial piece of work flows through these docs in the same direction:
+
+```
+docs/roadmap.md  →  docs/sprint-backlog.md  →  plans/active/*.md  →  docs/systems/*.md
+   (idea)              (current sprint)         (engineering plan)      (shipped truth)
+```
+
+**When starting work:**
+1. Check `docs/roadmap.md` for where the item lives. If it's not there, add it before starting.
+2. If it's non-trivial, create a plan file at `plans/active/YYYY-MM-DD-{slug}.md` using `docs/plan-template.md` (or run `/new-plan`).
+3. Add the item to `docs/sprint-backlog.md` under Active.
+4. Read the relevant `docs/systems/*.md` file if one exists for the area you're touching.
+5. Read the relevant `.claude/rules/*.md` file if one exists for the surface you're touching.
+6. Identify which files you'll touch. State this in your first response.
+
+**While working:**
+- Work in small steps with visible progress.
+- When you hit an unexpected failure, stop and diagnose before trying another fix. Do not layer patches.
+- If a change feels bigger than the plan suggested, stop and ask.
+
+**When finishing:**
+1. Update the plan file's session log with what shipped, what got deferred, and any tech debt introduced (or run `/session-end`).
+2. **Update or create the relevant `docs/systems/*.md` file** describing how the system works now. This is the knowledge-transfer step — the plan file archives, but the system doc stays the source of truth for that area going forward.
+3. Move the plan from `plans/active/` to `plans/shipped/`.
+4. Remove the item from `docs/sprint-backlog.md` and from `docs/roadmap.md` (done = gone, no `[x]` accumulation).
+5. If you discovered a convention or constraint Claude should remember, propose an update to this CLAUDE.md or a new rule in `.claude/rules/`.
+
+## Rule modules
+
+These live in `.claude/rules/` and are not auto-loaded — Claude must read them deliberately when entering the relevant area. Load via `@.claude/rules/{name}.md` (or read the file directly) before non-trivial work in that surface.
+
+{{SURFACES}}
+
+If a task spans surfaces, load all relevant rule files before coding any side.
+
+## What NOT to do (traps already learned)
+
+> Append-only list. When you catch Claude making a mistake, add it here with the rationale.
+
+{{KNOWN_TRAPS}}
+
+## Self-improvement directive
+
+When you identify a pattern the user is missing, a rule that should be codified, or a trap you fell into, propose an update to this file at the end of your response. The user accepts or rejects.

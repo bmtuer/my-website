@@ -1,0 +1,24 @@
+# Rules: {{SURFACE_NAME}}
+
+> Read this before non-trivial work in `{{SURFACE_PATH}}`.
+
+## Patterns to follow
+
+<!-- Add patterns as they emerge. Example:
+- Use the canonical helper at `path/to/helper.js` instead of writing new ones.
+- All public functions are typed; internal helpers can be inferred.
+-->
+
+## Patterns to avoid
+
+<!-- Add anti-patterns as you catch them. Example:
+- Don't bypass [some chokepoint] — it's there because of [past incident].
+-->
+
+## Conventions
+
+<!-- File naming, import order, test colocation, etc. -->
+
+## Canonical examples
+
+<!-- Pointers to the best-current-example of common patterns in this surface -->
