@@ -192,7 +192,10 @@ img {
   text-transform: uppercase;
   color: var(--bg);
   margin-left: auto;
-  opacity: 0.75;
+  opacity: 0.95;
+  text-shadow:
+    0 0 4px rgba(0, 0, 0, 0.9),
+    0 2px 12px rgba(0, 0, 0, 0.8);
 }
 
 .hero-credit a {
@@ -703,7 +706,7 @@ img {
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 200px 200px auto;
+  grid-auto-rows: auto;
   gap: 10px;
   padding: 20px 32px 28px;
   position: relative;
@@ -819,7 +822,6 @@ img {
 }
 
 .bento-cta {
-  margin-top: auto;
   padding-top: 12px;
   font-family: var(--font-body);
   font-size: 0.72rem;
@@ -891,3 +893,339 @@ img {
   font-size: 0.7rem;
   top: 2px;
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   Responsive — desktop-first, additive overrides
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── Tablet (≤768px) ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Nav: wrap, smaller nameplate, tighter spacing */
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 5%;
+  }
+
+  .nav-name {
+    font-size: 3.5rem;
+  }
+
+  .nav-links {
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    letter-spacing: 0.14em;
+  }
+
+  /* Content card padding */
+  .content-wrap {
+    padding: 200px 5% 120px;
+  }
+
+  .content-card {
+    padding: 40px 32px;
+  }
+
+  /* Card titles */
+  .card-title {
+    font-size: 2.2rem;
+  }
+
+  /* ── Work timeline → vertical stack ── */
+  .timeline-track {
+    flex-direction: column;
+    padding: 24px 28px;
+    gap: 28px;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: 16px;
+    row-gap: 0;
+    padding: 0;
+    text-align: left;
+  }
+
+  /* Vertical connector line replaces the horizontal one */
+  .timeline-item::before {
+    top: 28px;
+    bottom: -28px;
+    left: 27px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+
+  .timeline-item:first-child::before {
+    top: 28px;
+    left: 27px;
+  }
+
+  .timeline-item:last-child::before {
+    display: none;
+  }
+
+  /* Year: column 2, row 1 — sits above the role */
+  .timeline-year {
+    grid-column: 2;
+    grid-row: 1;
+    position: static;
+    margin: 0 0 4px 0;
+    font-size: 0.7rem;
+  }
+
+  /* Dot: column 1, row 1 — aligns with the year */
+  .timeline-dot {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    margin: 6px 0 0 0;
+  }
+
+  /* Image: column 1, row 2 — sits below the dot */
+  .timeline-image {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 8px 0 0 0;
+    width: 56px;
+    height: 56px;
+  }
+
+  /* Body: column 2, spans rows 2-3 — role + company + desc all together */
+  .timeline-body {
+    grid-column: 2;
+    grid-row: 2 / span 2;
+    text-align: left;
+    padding-top: 0;
+  }
+
+  .timeline-header {
+    padding: 24px 32px 16px;
+  }
+
+  /* ── Play bento → 2-column equal-weight ── */
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: none;
+    grid-auto-rows: minmax(180px, auto);
+    padding: 16px 24px 24px;
+  }
+
+  .bento-cell.span-2,
+  .bento-cell.row-2 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .bento-list {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Contact ── */
+  .contact-header {
+    padding: 24px 32px 16px;
+  }
+
+  .contact-body {
+    padding: 24px 32px 32px;
+  }
+
+  .hero-footer {
+    left: 5%;
+    right: 5%;
+  }
+}
+
+/* ── Phone (≤480px) ─────────────────────────────────────────────── */
+@media (max-width: 480px) {
+
+  /* ── Nav: nameplate scrolls with content (not fixed); links at bottom ── */
+  .nav {
+    position: absolute;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 16px 5%;
+    gap: 0;
+    background: transparent;
+  }
+
+  /* Stack "Bryan" / "Tuer" — keep size big */
+  .nav-name {
+    font-size: 3rem;
+    line-height: 0.95;
+    display: inline-flex;
+    flex-direction: column;
+  }
+
+  .nav-name-first,
+  .nav-name-last {
+    display: block;
+  }
+
+  /* Nav links → sticky bottom bar */
+  .nav-links {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: 0;
+    padding: 14px 5%;
+    background: rgba(240, 235, 227, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(45, 110, 126, 0.18);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: space-around;
+    gap: 0;
+    flex-wrap: nowrap;
+    z-index: 100;
+  }
+
+  .nav-links li {
+    flex: 1;
+    text-align: center;
+  }
+
+  .nav-link {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* Don't double-shadow nav links inside the bottom-bar pane */
+  .hero-page .nav-link {
+    text-shadow: none;
+  }
+
+  /* ── Content card paddings: shrink hard ── */
+  .content-wrap {
+    padding: 140px 4% 100px;  /* leave room for sticky nav at bottom */
+  }
+
+  .content-card {
+    padding: 32px 22px;
+  }
+
+  .card-title {
+    font-size: 1.8rem;
+  }
+
+  /* Work timeline phone tweaks */
+  .timeline-track {
+    padding: 20px 18px;
+    gap: 24px;
+  }
+
+  .timeline-header {
+    padding: 20px 22px 14px;
+  }
+
+  .timeline-item::before {
+    left: 27px;
+  }
+
+  .timeline-image {
+    width: 48px;
+    height: 48px;
+  }
+
+  .timeline-year {
+    font-size: 0.65rem;
+  }
+
+  .timeline-role {
+    font-size: 1.05rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.85rem;
+  }
+
+  /* Play → 1 column */
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: 10px;
+    padding: 14px 18px 22px;
+  }
+
+  .bento-cell {
+    padding: 18px 18px;
+  }
+
+  .bento-img,
+  .bento-img-pair {
+    min-height: 160px;
+  }
+
+  /* Contact: stack the email/linkedin buttons vertically */
+  .contact-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .contact-header {
+    padding: 20px 22px 14px;
+  }
+
+  .contact-body {
+    padding: 20px 22px 28px;
+  }
+
+  /* ── Hero on Home ── */
+  .nav-name {
+    /* On Home, the nav is in the hero — keep it generous */
+  }
+
+  .hero-credit {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* Home credit: clear the sticky bottom-bar nav, center align */
+  .hero-footer {
+    bottom: 76px;
+    justify-content: center;
+  }
+
+  .hero .hero-credit {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  /* Inner pages: tighten content height so credit sits naturally above the nav */
+  .content-wrap {
+    min-height: auto;
+    padding: 140px 4% 32px;
+  }
+
+  .hero-page .hero-footer {
+    position: static;
+    padding: 20px 5%;
+    margin-bottom: 64px;  /* clear the sticky nav-links bar */
+    text-align: center;
+  }
+
+  .hero-page .hero-credit {
+    color: var(--bg);
+    opacity: 0.9;
+    margin-left: 0;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  }
+
+  .hero-page .hero-credit a {
+    color: var(--bg);
+  }
+}
+
