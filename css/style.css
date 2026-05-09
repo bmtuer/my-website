@@ -412,13 +412,13 @@ img {
 }
 
 .timeline-year {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
   color: var(--teal);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  opacity: 0.85;
 }
 
 .timeline-dot {
@@ -476,31 +476,31 @@ img {
 
 .timeline-role {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   font-weight: 400;
   color: var(--text);
   margin-bottom: 6px;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 .timeline-company {
   font-family: var(--font-body);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--teal);
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .timeline-desc {
   font-family: var(--font-body);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 400;
   color: var(--text);
   line-height: 1.6;
-  opacity: 0.85;
+  opacity: 0.78;
 }
 
 /* ── Contact ── */
@@ -718,10 +718,14 @@ img {
   width: 100%;
 }
 
+/* Asymmetric bento: two tall rows for the image cells, one shorter row
+   for the wide text cells at the bottom. Image cells (Baltimore, Family,
+   Maya) anchor the upper rows; text cells (Video Games, Other Interests)
+   sit wide along the bottom. */
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: auto;
+  grid-template-rows: 200px 200px auto;
   gap: 10px;
   padding: 20px 32px 28px;
   position: relative;

@@ -4,7 +4,7 @@
 - [x] Drafting
 - [x] Approved to start
 - [x] In progress
-- [ ] Shipped
+- [x] Shipped
 - [ ] Cancelled
 
 ## Decisions (locked at preflight)
@@ -73,16 +73,28 @@ Once this and design-polish ship together, create `docs/systems/visual-system.md
 ## Session log
 
 ### Session 1 — 2026-05-08
-**Goal:** ...
+**Goal:** Resolve inner-page legibility (cards vs busy skyline) and add subtle motion to lift perceived quality.
 
 **Shipped:**
-- ...
+- Global background dim on inner pages: `.bg-wrap .hero-image` filter changed from `saturate(0.6) brightness(0.85)` to `saturate(0.45) brightness(0.55)`. Gradient overlay strengthened across all stops (cream-to-dark gradient now darker through the middle and bottom).
+- Home stays bright — only `.bg-wrap` (the inner-page shared backdrop) was darkened. `.hero` (Home) untouched.
+- Card opacity left frosted at 0.93 — the dim does the legibility work without erasing the frosted-glass aesthetic.
+- Nameplate shrinks on inner pages: `.hero-page .nav-name { font-size: 3.5rem }` (from desktop's 5.5rem). Home keeps full size; the size contrast makes Home's nameplate feel more important by design.
+- Hover on `.timeline-image`: `transform: scale(1.06)` + lifted box-shadow on hover, 0.2s ease both ways. Just the icon, not the whole card row, to avoid implying false clickability.
+- Stagger fade-in: new `@keyframes fade-up` (8px translateY + opacity), applied to `.timeline-item` and `.bento-cell`. Animation delays from 0.40s through 0.80s in 80ms increments per card. Fires after the existing body fade (0.35s) so they don't fight.
+- `@media (prefers-reduced-motion: reduce)` block disables the stagger for users who've opted out.
+- Plan updates: locked decisions in the plan's frontmatter (background dim, card opacity, nameplate, stagger timing, hover scope).
+- Mobile-responsive plan formally closed: moved `2026-05-08-mobile-responsive.md` from `plans/active/` to `plans/shipped/`, removed from sprint backlog.
+- One commit pushed: `3f6bfd2 legibility and motion pass`.
 
 **Didn't ship / blocked:**
-- ...
+- Nothing meaningful — all five acceptance criteria landed in one pass without iteration. Much smoother than the mobile session because this was layered on a known-good responsive layout instead of restructuring it.
+- Skipped `/review-diff` at user's request before commit.
 
 **Tech debt introduced:**
-- ...
+- Stagger fade-in uses `nth-child` selectors hardcoded for up to 6 cards each (`.timeline-item:nth-child(1..6)`, `.bento-cell:nth-child(1..6)`). If Work or Play ever has more than 6 entries, the later ones will fade in immediately without delay. Easy fix when needed; not blocking now.
+- `docs/systems/visual-system.md` still not created — deferred to design-polish per the original plan agreement, but the dim/overlay/card-opacity decisions made in this session are now load-bearing aesthetic choices that should land in that doc when it's created.
+- `.claude/rules/styles.md` rule file still empty — should eventually capture the "additive `@media` blocks at bottom" convention plus the new "motion respects `prefers-reduced-motion`" convention.
 
 **Next session's first move:**
-- ...
+- Mark legibility-and-motion plan status "Shipped," move it to `plans/shipped/`, remove its sprint-backlog entry. Then start `design-polish`: open `plans/active/2026-05-08-design-polish.md` and run `/preflight` against it. First decision in that plan is whether to commit to a deliberate Play bento layout (with intentional `span` and `row` choices) vs. accepting the current cells-hug-content approach.

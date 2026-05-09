@@ -2,10 +2,21 @@
 
 ## Status
 - [x] Drafting
-- [ ] Approved to start
-- [ ] In progress
+- [x] Approved to start
+- [x] In progress
 - [ ] Shipped
 - [ ] Cancelled
+
+## Decisions (locked at preflight)
+
+- **Bento:** Commit to deliberate asymmetric layout. Explicit row heights, intentional `row-2` / `span-2` choices, tuned visual rhythm. Image-bearing cells (Baltimore, Family, Maya) lean tall/portrait; text-bearing cells (Video Games, Other Interests) lean wide.
+- **Typography:** Light hierarchy bump only. No type-scale variables. Bump year markers from 0.75rem → ~1.5rem, role titles a bit, lean company smallcaps further (more letter-spacing). No CSS-variable refactor.
+- **Hero credit:** *Dropped* — current treatment is fine. Acceptance criterion removed below.
+- **Cursor wayfinding:** *Dropped mid-session.* `aria-current="page"` attributes were added to all nav links anyway for accessibility, but no visual swap.
+
+## Acceptance criteria (revised)
+
+The hero-credit criterion was dropped at preflight — Bryan likes the current treatment and didn't want a redesign. Three criteria remain.
 
 ## Problem
 With mobile working and inner-page legibility solid, the remaining moves are opinionated polish: Play page grid lacks intentional rhythm, typographic hierarchy is too compressed, the hero photo credit deserves better treatment, and the cursor motif is wasted as a wayfinding signal. These are the "make it yours" moves — each is small individually, but they compound.
@@ -14,8 +25,8 @@ With mobile working and inner-page legibility solid, the remaining moves are opi
 
 - [ ] **Play page bento grid:** Cards have intentional varied widths/heights (or strict equal columns — pick one and commit). Current accidental unevenness is gone.
 - [ ] **Typography hierarchy:** Bigger size spread across the page (e.g. 12px / 16px / 28px / 56px). Year markers display-large; job titles heavier; company names smaller-caps with extended letter-spacing.
-- [ ] **Hero credit treatment:** On Home, the photo credit is set deliberately — larger, more breathing room, treated like a caption to the photograph rather than a tucked-away footnote.
-- [ ] **Cursor wayfinding:** The `_` after the active nav link is coral; the others stay teal. Reuses an existing motif as a wayfinding signal.
+- [ ] ~~**Hero credit treatment:**~~ *Dropped at preflight (2026-05-08).*
+- [ ] ~~**Cursor wayfinding:**~~ *Dropped mid-session (2026-05-08). The existing coral-cursor-everywhere is doing aesthetic work (visual rhyme with the nameplate, bullets, button accents); the proposed swap would compete with the existing coral→teal hover state and solve a wayfinding problem that doesn't really exist on a 4-page site. `aria-current="page"` was added to all nav links as part of this work and stays — useful for screen readers regardless.*
 
 ## Changes by area
 

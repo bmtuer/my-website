@@ -12,7 +12,6 @@ Design uplift v1 — fix the visual issues holding the site back (legibility, hi
 
 Shipping order: mobile → legibility → polish. Mobile is the blocker; legibility removes visual noise that makes polish hard to evaluate; polish is dessert.
 
-- **Legibility and Motion** · `polish` · P1 Design. Inner-page background dimming, card opacity, nameplate decision, staggered card fade-in, hover states. *Plan: `plans/active/2026-05-08-legibility-and-motion.md`.*
 - **Design Polish** · `polish` · P2 Design. Play bento grid, typography hierarchy, hero credit treatment, cursor wayfinding. *Plan: `plans/active/2026-05-08-design-polish.md`.*
 
 ## Blocked / carry-over (long-running)
