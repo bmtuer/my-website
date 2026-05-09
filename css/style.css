@@ -1048,7 +1048,8 @@ img {
 /* ── Phone (≤480px) ─────────────────────────────────────────────── */
 @media (max-width: 480px) {
 
-  /* ── Nav: nameplate scrolls with content (not fixed); links at bottom ── */
+  /* Nav container scrolls in flow; .nav-links is lifted to a fixed
+     bottom-bar below, which is why the nav itself is absolute (not fixed). */
   .nav {
     position: absolute;
     flex-direction: row;
@@ -1161,7 +1162,7 @@ img {
   }
 
   .bento-cell {
-    padding: 18px 18px;
+    padding: 18px;
   }
 
   .bento-img,
@@ -1181,11 +1182,6 @@ img {
 
   .contact-body {
     padding: 20px 22px 28px;
-  }
-
-  /* ── Hero on Home ── */
-  .nav-name {
-    /* On Home, the nav is in the hero — keep it generous */
   }
 
   .hero-credit {
