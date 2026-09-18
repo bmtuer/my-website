@@ -79,8 +79,8 @@ document.querySelectorAll('.nav-link').forEach(link => {
         link.childNodes[0].nodeValue = originalText;
       }
 
-      iteration += 0.5;
-    }, 40);
+      iteration += 0.4;
+    }, 55);
   });
 
   link.addEventListener('mouseleave', () => {

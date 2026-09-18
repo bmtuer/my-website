@@ -739,19 +739,34 @@ img {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(45, 110, 126, 0.45) transparent;
 }
 
 .bento-grid::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+}
+
+.bento-grid::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
 }
 
 .bento-grid::-webkit-scrollbar-track {
   background: transparent;
+  margin: 4px 0;
 }
 
 .bento-grid::-webkit-scrollbar-thumb {
-  background: rgba(45, 110, 126, 0.25);
-  border-radius: 3px;
+  background: rgba(45, 110, 126, 0.4);
+  border-radius: 8px;
+  border: 2px solid rgba(236, 230, 221, 0.93);
+  background-clip: padding-box;
+}
+
+.bento-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--terracotta);
+  background-clip: padding-box;
 }
 
 .bento-cell {
