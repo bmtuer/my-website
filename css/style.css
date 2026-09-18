@@ -716,6 +716,12 @@ img {
   border-radius: 12px;
   overflow: hidden;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Cap to the space .content-wrap reserves around the fixed nav/footer
+     (140px top + 100px bottom) so tall bento content scrolls inside the
+     card instead of growing the page and sliding behind them. */
+  max-height: calc(100vh - 240px);
 }
 
 /* Asymmetric bento: two tall rows for the image cells, one shorter row
@@ -730,6 +736,22 @@ img {
   padding: 20px 32px 28px;
   position: relative;
   z-index: 1;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.bento-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bento-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bento-grid::-webkit-scrollbar-thumb {
+  background: rgba(45, 110, 126, 0.25);
+  border-radius: 3px;
 }
 
 .bento-cell {
@@ -946,6 +968,11 @@ img {
   /* Content card padding */
   .content-wrap {
     padding: 200px 5% 120px;
+  }
+
+  /* Match the taller nav/footer reserve at this breakpoint (200px + 120px) */
+  .play-card {
+    max-height: calc(100vh - 320px);
   }
 
   .content-card {
@@ -1172,12 +1199,20 @@ img {
     font-size: 0.85rem;
   }
 
-  /* Play → 1 column */
+  /* Play → 1 column. Nav/footer are no longer fixed at this breakpoint
+     (see .hero-page .hero-footer, .nav below), so the whole page scrolls
+     in normal flow — undo the desktop internal-scroll containment. */
+  .play-card {
+    max-height: none;
+  }
+
   .bento-grid {
     grid-template-columns: 1fr;
     grid-auto-rows: auto;
     gap: 10px;
     padding: 14px 18px 22px;
+    flex: none;
+    overflow-y: visible;
   }
 
   .bento-cell {
