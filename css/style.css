@@ -762,7 +762,7 @@ img {
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 200px 200px auto;
+  grid-template-rows: 172px 172px auto;
   gap: 10px;
   padding: 20px 32px 28px;
   position: relative;
@@ -804,10 +804,10 @@ img {
   background: rgba(255, 255, 255, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.75);
   border-radius: 8px;
-  padding: 20px 22px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
   min-height: 0; /* let grid rows define height */
 }
 
@@ -834,10 +834,10 @@ img {
 
 .bento-desc {
   font-family: var(--font-body);
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   font-weight: 300;
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.45;
   opacity: 0.75;
 }
 
@@ -958,16 +958,17 @@ img {
   list-style: none;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px 16px;
-  margin-top: 12px;
+  gap: 6px 14px;
+  margin-top: 8px;
 }
 
 .bento-list li {
   font-family: var(--font-body);
-  font-size: 0.88rem;
+  font-size: 0.78rem;
   font-weight: 300;
   color: var(--text);
   opacity: 0.75;
+  line-height: 1.35;
   padding-left: 14px;
   position: relative;
 }
