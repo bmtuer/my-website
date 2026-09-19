@@ -78,9 +78,13 @@ Architecture note: each card uses a *separate sibling element* for the frosted b
 
 ## Work timeline
 
-`.timeline-track` lays out entries in a single flex row on desktop (`.timeline-item` per entry, `flex:1` for equal width), collapsing to a vertical CSS-grid stack at the tablet breakpoint. Each entry's dot + connecting line sit unboxed above the content (`.timeline-item::before`, a hairline positioned at a fixed `top` offset); the role/company/description sit inside `.timeline-body`, which has its own subtle card (background/border, same recipe as `.bento-cell`).
+`.timeline-track` lays out entries in a single flex row on desktop, collapsing to a vertical CSS-grid stack at the tablet breakpoint. Each entry's dot + connecting line sit unboxed above the content (`.timeline-item::before`, a hairline positioned at a fixed `top` offset); the role/company/description sit inside `.timeline-body`, which has its own subtle card (background/border, same recipe as `.bento-cell`).
 
-That per-entry card exists specifically so entries of very different description lengths don't create dead space: `.timeline-track` sets `align-items: flex-start` (not the flex default `stretch`), so `.timeline-item` sizes to its own content instead of stretching to match the tallest sibling in the row, and because `.timeline-body` has a visible boundary, a shorter entry just reads as "a smaller card" rather than "empty space inside my card." The tablet breakpoint needs `align-items: stretch` restored on `.timeline-track`, since `.timeline-item` becomes a CSS grid there that needs full width, not shrink-to-fit.
+**Card width and scroll (desktop).** `.timeline-item` is a fixed `flex: 0 0 260px`, not `flex: 1`. It used to be equal-width columns splitting the row, but once the display font went monospace (see below) that squeezed 5 entries into ~1/5 of the row width each, causing brutal word-wrapping. `.timeline-track` now does what its scrollbar CSS had implied since v1 but never actually did (`overflow` was `hidden`): `overflow-x: auto`, with a themed scrollbar matching `.bento-grid`'s (slim rounded thumb, no native buttons, terracotta on hover) and real drag-to-scroll wired up in `js/main.js` (mousedown/mousemove/mouseup on `.timeline-track`, adjusting `scrollLeft`) to match the `cursor: grab`/`grabbing` styling.
+
+A **vertical single-column "log" layout** (bracketed years, `@company` handles, no per-column width constraint) was prototyped and screenshotted as an alternative — solves the wrapping problem by construction since nothing needs to share a row — but was rejected: the user wanted to keep the original horizontal-row concept, just with the space fixed, not replace it. Don't re-propose the vertical layout without cause; the horizontal-scroll fix above is the settled direction.
+
+**Per-entry card sizing.** `.timeline-track` sets `align-items: flex-start` (not the flex default `stretch`), so `.timeline-item` sizes to its own content instead of stretching to match the tallest sibling in the row, and because `.timeline-body` has a visible boundary, a shorter entry just reads as "a smaller card" rather than "empty space inside my card." **The tablet breakpoint needs both `align-items: stretch` AND `flex: none` on its `.timeline-item` override** — `.timeline-item` becomes a CSS grid there needing full width (not shrink-to-fit, hence `stretch`), and without `flex: none` the desktop rule's `flex: 0 0 260px` would still apply as a *height* constraint once `.timeline-track` becomes `flex-direction: column` at that breakpoint (flex-basis follows the flex container's main axis, which rotates to vertical in a column layout).
 
 ## Background overlay (inner pages)
 
@@ -105,13 +109,15 @@ The dim is what makes cards win against the busy skyline. **Home (`.hero`) is in
 
 ## Bento grid (Life page)
 
-`grid-template-columns: repeat(4, 1fr)` with `grid-template-rows: 200px 200px auto`. Two tall rows hold the image cells (Baltimore, Family, Maya); a third auto row holds the wide text cells (Video Games, Other Interests).
+`grid-template-columns: repeat(4, 1fr)` with `grid-template-rows: 172px 172px auto` (was `200px 200px` through Design Uplift v2's first pass — see below). Two tall rows hold the image cells (Baltimore, Family, Maya); a third auto row holds the wide text cells (Video Games, Other Interests).
 
 Span classes:
 - `.row-2` — cell spans 2 rows (used by Baltimore, Family — tall portrait/landscape)
 - `.span-2` — cell spans 2 columns (used by Family, Video Games, Other Interests — wide)
 
 The asymmetric layout is deliberate. Don't rebalance to equal-column unless the content shape changes meaningfully.
+
+**Why the rows shrank.** The grid's own box height is fixed by flexbox (`.bento-grid` is `flex: 1` inside the height-capped `.play-card`, see "Panel containment" below) — its `auto` third row does NOT size to its content's natural height the way an unconstrained grid's `auto` row would. It only gets whatever space is left over after the two fixed rows, within the container's already-fixed total height. When the display font went monospace and needed more room per line, the two `200px` rows were leaving too little for the third, and `.bento-cell`'s content (Video Games, Other Interests) was overflowing its own box — invisible without scrolling, not just visually cramped. Fixed by shrinking the two fixed rows to `172px` (freeing space for row 3) alongside tighter `.bento-cell` padding/gap, smaller `.bento-desc`/`.bento-list` font-size and line-height, and trimmed copy. **If this recurs** (a font or copy change increases text volume again): check `scrollHeight` vs `clientHeight` on each `.bento-cell` and on `.bento-grid` itself — any nonzero delta means a cell is silently overflowing its box, which reads as content being cut off rather than a subtle scroll hint.
 
 ### Panel containment (desktop/tablet)
 

@@ -76,3 +76,23 @@ Everything is a CSS/HTML content change on a feature branch with clean, isolated
 
 **Next session's first move:**
 - None — plan ships this session pending final visual verification
+
+### Session 2 — 2026-09-19 (same day, continued feedback)
+
+**Goal:** Fraunces didn't land in practice; further feedback on the timeline and Life page once the font actually changed.
+
+**Shipped:**
+- Font: Fraunces → IBM Plex Mono, site-wide (`--font-display` and `--font-body` both), after explicit "more terminal-y" feedback. Nameplate (Bungee/Bungee Inline) untouched.
+- Work timeline dead-space fix (per-entry `.timeline-body` card, `align-items: flex-start` on the track) — this landed before the font swap and is unrelated to it.
+- Work timeline reworked again once monospace made the original fix insufficient: `.timeline-item` went from `flex: 1` (5 equal columns, heavy word-wrap) to `flex: 0 0 260px` with real `overflow-x: auto` horizontal scroll (the scrollbar CSS had existed since v1 but `overflow` was `hidden` — never actually wired up) plus drag-to-scroll in `js/main.js`.
+- A vertical "terminal log" alternative layout for Work was prototyped, screenshotted, and explicitly rejected — user wanted the horizontal concept kept, just fixed. Documented in the system doc so it isn't re-proposed without cause.
+- Life page bento grid: two rounds of fixes. First round trimmed some copy (insufficient — verification caught two cells still silently overflowing their own box, invisible without scrolling). Second round shrunk the two fixed image rows 200px→172px, tightened cell padding/gap and `.bento-desc`/`.bento-list` type size, and trimmed Video Games + Other Interests further. Verified via scrollHeight/clientHeight on every cell: zero overflow.
+
+**Didn't ship / blocked:**
+- Nothing outstanding.
+
+**Tech debt introduced:**
+- None new. The `.bento-grid` auto-row-sizing gotcha (it doesn't size to content the way an unconstrained grid would, because the grid's own height is fixed by flexbox) is now documented in `docs/systems/visual-system.md` so the next content/font change doesn't rediscover it the hard way.
+
+**Next session's first move:**
+- None.
