@@ -6,11 +6,11 @@ When a sprint closes, clear this file and pull the next batch. Shipped items don
 
 ## Sprint theme
 
-*(Sprint cleared — design uplift v1 shipped 2026-05-08. Next sprint to be themed when the next batch of work is queued up.)*
+Design Uplift v2 — feedback round on the Play page and overall visual identity.
 
 ## Active
 
-*(None.)*
+- Design Uplift v2 — Play page containment, timeline update, Play→Life rename, nameplate refinement, Warm Ink palette + Fraunces font. Plan: `plans/active/2026-09-19-design-uplift-v2.md`
 
 ## Blocked / carry-over (long-running)
 

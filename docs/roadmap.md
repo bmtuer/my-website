@@ -39,7 +39,7 @@ Every roadmap item carries three orthogonal tags: **Workstream** (where the work
 
 ### P1 — Core deliverables within milestone
 
-*(None.)*
+- Design Uplift v2: Play page containment fix, timeline update, Play→Life rename + de-emoji headers, nameplate refinement, Warm Ink palette + Fraunces font `[milestone: Design Uplift v2]`
 
 ### P2 — Round-out within milestone
 
