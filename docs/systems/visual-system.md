@@ -7,7 +7,7 @@
 ## Where the code lives
 
 - **All visual rules:** `css/style.css` (single file, hand-written, no preprocessor, no build step)
-- **Per-page markup:** `index.html`, `work.html`, `play.html`, `contact.html`
+- **Per-page markup:** `index.html`, `work.html`, `life.html`, `contact.html`
 - **Page transitions + nav effects + form handling:** `js/main.js`
 - **Static assets:** `assets/images/` (photos, logos), `assets/favicon.svg`
 
@@ -88,7 +88,7 @@ Inner pages share a fixed-position background image (`.bg-wrap`) that's globally
 
 The dim is what makes cards win against the busy skyline. **Home (`.hero`) is intentionally NOT dimmed** — Home gets the full atmospheric photo because the page is artistically empty and the photo is the hero.
 
-## Bento grid (Play page)
+## Bento grid (Life page)
 
 `grid-template-columns: repeat(4, 1fr)` with `grid-template-rows: 200px 200px auto`. Two tall rows hold the image cells (Baltimore, Family, Maya); a third auto row holds the wide text cells (Video Games, Other Interests).
 
@@ -106,7 +106,7 @@ Body fades in from opacity 0 → 1 over 350ms on `DOMContentLoaded`. Internal li
 
 ### Card stagger fade-in (`css/style.css`, near end)
 
-`@keyframes fade-up` (8px translateY + opacity). Applied to `.timeline-item` (Work) and `.bento-cell` (Play). Animation delays from 0.40s → 0.80s in 80ms increments per child (up to 6 children — beyond that the later cards fade in immediately, which is acceptable tech debt).
+`@keyframes fade-up` (8px translateY + opacity). Applied to `.timeline-item` (Work) and `.bento-cell` (Life). Animation delays from 0.40s → 0.80s in 80ms increments per child (up to 6 children — beyond that the later cards fade in immediately, which is acceptable tech debt).
 
 The 0.40s offset means stagger starts *after* the body fade completes (0.35s) so they don't fight visually.
 
@@ -138,8 +138,8 @@ Desktop-first, additive `@media (max-width: ...)` blocks at the bottom of `css/s
 
 | Breakpoint | Block | What it covers |
 |---|---|---|
-| `max-width: 768px` | Tablet | Nav wraps below nameplate, smaller type, content padding shrinks, Work timeline becomes vertical 2-col grid (icon + body), Play bento becomes 2-col equal, hero credit positioning |
-| `max-width: 480px` | Phone | Sticky bottom-bar nav (`.nav-links { position: fixed; bottom: 0 }` with backdrop-blur), nameplate scrolls in flow, Play bento → 1-col, contact buttons stack vertically, hero credit sits in flow above the bottom bar |
+| `max-width: 768px` | Tablet | Nav wraps below nameplate, smaller type, content padding shrinks, Work timeline becomes vertical 2-col grid (icon + body), Life bento becomes 2-col equal, hero credit positioning |
+| `max-width: 480px` | Phone | Sticky bottom-bar nav (`.nav-links { position: fixed; bottom: 0 }` with backdrop-blur), nameplate scrolls in flow, Life bento → 1-col, contact buttons stack vertically, hero credit sits in flow above the bottom bar |
 
 The `.nav` container itself becomes `position: absolute` on phone (so the nameplate scrolls with content) while `.nav-links` is lifted to a fixed bottom-bar — see code comment at the phone breakpoint for why.
 
