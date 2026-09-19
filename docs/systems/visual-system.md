@@ -27,10 +27,11 @@ Defined in `css/style.css:7-15` as CSS custom properties on `:root`:
 
 **When touching palette values:** every hardcoded RGB duplicate has to move too, not just the `:root` declarations — several rules use raw `rgba(45, 110, 126, …)` / `rgba(240, 235, 227, …)` instead of `var(--ink)` / `var(--bg)` (frosted-card shadows, scrollbar thumbs, hairline borders, the nameplate's own text-shadow). Grep the old hex/RGB triplet across `css/style.css` before considering a color change done.
 
-Three fonts are loaded from Google Fonts (`css/style.css:2`):
-- **Display:** `'Fraunces'` (variable font, opsz+wght axes, weights 400/500 imported) — used for nameplate, card titles, role titles, year markers. Was `'Tenor Sans'` through v1; swapped in v2 for more presence/character. Display headings run at weight 500 (was 400).
-- **Body:** `'Outfit'` — weights 300, 400, 500, 600 — everything else
-- Also loaded but used only on the nameplate: `'Bungee'` (solid) and `'Bungee Inline'` (striped). Bungee Inline = "Bryan" filled coral. Bungee = "Tuer" outlined dark.
+Two fonts are loaded from Google Fonts (`css/style.css:2`):
+- **Display and body:** `'IBM Plex Mono'` — weights 300/400/500/600 imported, one monospace font for everything except the nameplate. `--font-display` and `--font-body` both point at it. Went through two changes same day: `'Tenor Sans'` (v1) → `'Fraunces'` (early v2, a warm serif) → `'IBM Plex Mono'` (still v2, after the Fraunces pass didn't land — the user wanted an overall more "terminal-y" feel, which the site's nav-link cursor (`<span class="cursor">_</span>`) was already gesturing at). Display headings still run at weight 500 for hierarchy against 300/400 body weights, even though it's the same family as body text now.
+- Also loaded but used only on the nameplate: `'Bungee'` (solid) and `'Bungee Inline'` (striped). Bungee Inline = "Bryan" filled coral. Bungee = "Tuer" outlined dark. Not monospace, not affected by the terminal-font pass — the nameplate is treated as a separate logo mark, not body/display type.
+
+**Before changing `--font-display`/`--font-body` again:** check whether the new font's available weights actually cover what's used (`grep -n "font-weight" css/style.css` — currently needs 300/400/500/600) before writing the `@import`, and check `letter-spacing` on uppercase labels once it's live — monospace fonts are wider per character than proportional ones, so tracking values tuned for the previous font can end up looking excessive.
 
 ## Type scale
 
@@ -40,16 +41,16 @@ No formal scale variables. Values are inline on the rules where they apply. Effe
 |---|---|---|---|
 | Nameplate (Home) | `5.5rem` | Bungee + Bungee Inline | Two-tone, tracking 0.01em, layered depth (see below) |
 | Nameplate (inner pages) | `3.5rem` | Bungee + Bungee Inline | Smaller so the card is the visual lead |
-| Card title | `2.8rem` | Fraunces 500 | Letter-spacing 0.04em |
-| Year marker | `1.5rem` | Fraunces 500 | Ink, 0.85 opacity, letter-spacing 0.06em — temporal anchor |
-| Role title | `1.35rem` | Fraunces 500 | Tight line-height 1.25 |
-| Bento title | `1.25rem` | Fraunces 500 | line-height 1.2 |
-| Body copy | `0.85rem` (timeline-desc), `0.84rem` (bento-desc) | Outfit 300 | line-height 1.6, opacity 0.78 |
-| Company name | `0.7rem` | Outfit 600 | Uppercase, letter-spacing 0.22em — smallcaps treatment |
-| Bento label | `0.6rem` | Outfit 600 | Uppercase, letter-spacing 0.22em |
-| Hero credit | `0.7rem` | Outfit 400 | Uppercase, letter-spacing 0.12em, cream with text-shadow |
+| Card title | `2.8rem` | IBM Plex Mono 500 | Letter-spacing 0.04em |
+| Year marker | `1.5rem` | IBM Plex Mono 500 | Ink, 0.85 opacity, letter-spacing 0.06em — temporal anchor |
+| Role title | `1.35rem` | IBM Plex Mono 500 | Tight line-height 1.25 |
+| Bento title | `1.25rem` | IBM Plex Mono 500 | line-height 1.2 |
+| Body copy | `0.85rem` (timeline-desc), `0.84rem` (bento-desc) | IBM Plex Mono 300 | line-height 1.6, opacity 0.78 |
+| Company name | `0.7rem` | IBM Plex Mono 600 | Uppercase, letter-spacing 0.22em — smallcaps treatment |
+| Bento label | `0.6rem` | IBM Plex Mono 600 | Uppercase, letter-spacing 0.22em |
+| Hero credit | `0.7rem` | IBM Plex Mono 400 | Uppercase, letter-spacing 0.12em, cream with text-shadow |
 
-Pattern: prominent text uses Fraunces (display, weight 500); utility text uses Outfit body weights. The contrast between display and body is intentional.
+Pattern: display text runs at weight 500, body/utility text at 300-600 depending on role — same monospace family throughout, hierarchy comes from weight/size/color, not font contrast (unlike v1/early-v2, which paired a distinct display font against a body font).
 
 ### Nameplate depth treatment
 
@@ -74,6 +75,12 @@ Architecture note: each card uses a *separate sibling element* for the frosted b
 `.content-card` (used by simpler pages) is a single-element variant with `backdrop-filter: blur(12px)` directly applied. Works because it has no child images.
 
 **Don't bump card opacity above 0.95** — that erases the frosted-glass character. If legibility suffers, dim the background instead (see "Background overlay" below).
+
+## Work timeline
+
+`.timeline-track` lays out entries in a single flex row on desktop (`.timeline-item` per entry, `flex:1` for equal width), collapsing to a vertical CSS-grid stack at the tablet breakpoint. Each entry's dot + connecting line sit unboxed above the content (`.timeline-item::before`, a hairline positioned at a fixed `top` offset); the role/company/description sit inside `.timeline-body`, which has its own subtle card (background/border, same recipe as `.bento-cell`).
+
+That per-entry card exists specifically so entries of very different description lengths don't create dead space: `.timeline-track` sets `align-items: flex-start` (not the flex default `stretch`), so `.timeline-item` sizes to its own content instead of stretching to match the tallest sibling in the row, and because `.timeline-body` has a visible boundary, a shorter entry just reads as "a smaller card" rather than "empty space inside my card." The tablet breakpoint needs `align-items: stretch` restored on `.timeline-track`, since `.timeline-item` becomes a CSS grid there that needs full width, not shrink-to-fit.
 
 ## Background overlay (inner pages)
 

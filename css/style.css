@@ -1,5 +1,5 @@
 /* ── Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Inline&family=Outfit:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Inline&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
 /* ── Variables ──
    "Warm Ink" palette — pulled from the hero photo itself (dusty maroon
    brick shadows, warm brown-black) instead of the old teal, which was a
@@ -10,8 +10,8 @@
   --ink: #8A3A34;
   --terracotta: #D89468;
   --grey: #9a9a9a;
-  --font-body: 'Outfit', sans-serif;
-  --font-display: 'Fraunces', serif;
+  --font-body: 'IBM Plex Mono', monospace;
+  --font-display: 'IBM Plex Mono', monospace;
 }
 
 /* ── Page transitions ── */
