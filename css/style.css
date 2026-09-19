@@ -368,11 +368,15 @@ img {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 32px 40px;
+  padding: 32px 40px 28px;
   gap: 0;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   position: relative;
   z-index: 1;
+  cursor: grab;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(138, 58, 52, 0.45) transparent;
 }
 
 .timeline-track:active {
@@ -380,23 +384,36 @@ img {
 }
 
 .timeline-track::-webkit-scrollbar {
-  height: 2px;
+  height: 8px;
+}
+
+.timeline-track::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
 }
 
 .timeline-track::-webkit-scrollbar-track {
   background: transparent;
+  margin: 0 4px;
 }
 
 .timeline-track::-webkit-scrollbar-thumb {
-  background: rgba(138, 58, 52, 0.25);
-  border-radius: 2px;
+  background: rgba(138, 58, 52, 0.4);
+  border-radius: 8px;
+  border: 2px solid rgba(241, 231, 218, 0.93);
+  background-clip: padding-box;
+}
+
+.timeline-track::-webkit-scrollbar-thumb:hover {
+  background: var(--terracotta);
+  background-clip: padding-box;
 }
 
 .timeline-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
+  flex: 0 0 260px;
   position: relative;
   padding: 0 20px;
 }
@@ -1023,6 +1040,7 @@ img {
 
   .timeline-item {
     display: grid;
+    flex: none;
     grid-template-columns: 56px 1fr;
     grid-template-rows: auto auto auto;
     column-gap: 16px;

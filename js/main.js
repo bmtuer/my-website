@@ -53,6 +53,30 @@ function showToast(message, isError = false) {
   }, 4000);
 }
 
+// Drag-to-scroll on the work timeline (desktop row layout only —
+// overflow-x is only active there; harmless no-op elsewhere since
+// scrollWidth won't exceed clientWidth on the tablet/phone vertical stack)
+const timelineTrack = document.querySelector('.timeline-track');
+if (timelineTrack) {
+  let isDown = false;
+  let startX = 0;
+  let startScroll = 0;
+
+  timelineTrack.addEventListener('mousedown', e => {
+    isDown = true;
+    startX = e.pageX;
+    startScroll = timelineTrack.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => { isDown = false; });
+
+  window.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    timelineTrack.scrollLeft = startScroll - (e.pageX - startX);
+  });
+}
+
 // Scramble effect on nav links
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
