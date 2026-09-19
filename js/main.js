@@ -76,36 +76,55 @@ if (timelineTrack) {
     timelineTrack.scrollLeft = startScroll - (e.pageX - startX);
   });
 
-  // Edge fades hinting there's more to scroll to — sized/positioned to
-  // match the track exactly (avoids hardcoding .timeline-header's height,
-  // which changes across breakpoints), shown/hidden based on scroll position.
+  // Edge fades + scroll buttons hinting there's more to scroll to — sized/
+  // positioned to match the track exactly (avoids hardcoding
+  // .timeline-header's height, which changes across breakpoints), shown/
+  // hidden based on scroll position.
   const fadeLeft = document.querySelector('.timeline-fade-left');
   const fadeRight = document.querySelector('.timeline-fade-right');
+  const btnLeft = document.querySelector('.timeline-scroll-btn-left');
+  const btnRight = document.querySelector('.timeline-scroll-btn-right');
 
-  if (fadeLeft && fadeRight) {
-    const positionFades = () => {
+  if (fadeLeft && fadeRight && btnLeft && btnRight) {
+    const positionEdgeHints = () => {
       const top = timelineTrack.offsetTop + 'px';
       const height = timelineTrack.offsetHeight + 'px';
+      const centerY = timelineTrack.offsetTop + timelineTrack.offsetHeight / 2 + 'px';
       fadeLeft.style.top = top;
       fadeLeft.style.height = height;
       fadeRight.style.top = top;
       fadeRight.style.height = height;
+      btnLeft.style.top = centerY;
+      btnRight.style.top = centerY;
     };
 
-    const updateFades = () => {
+    const updateEdgeHints = () => {
       const hasOverflow = timelineTrack.scrollWidth > timelineTrack.clientWidth;
       const atStart = timelineTrack.scrollLeft <= 0;
       const atEnd = timelineTrack.scrollLeft + timelineTrack.clientWidth >= timelineTrack.scrollWidth - 1;
-      fadeLeft.classList.toggle('is-visible', hasOverflow && !atStart);
-      fadeRight.classList.toggle('is-visible', hasOverflow && !atEnd);
+      const showLeft = hasOverflow && !atStart;
+      const showRight = hasOverflow && !atEnd;
+      fadeLeft.classList.toggle('is-visible', showLeft);
+      fadeRight.classList.toggle('is-visible', showRight);
+      btnLeft.classList.toggle('is-visible', showLeft);
+      btnRight.classList.toggle('is-visible', showRight);
     };
 
-    positionFades();
-    updateFades();
-    timelineTrack.addEventListener('scroll', updateFades);
+    const scrollByOneCard = direction => {
+      const card = timelineTrack.querySelector('.timeline-item');
+      const step = card ? card.getBoundingClientRect().width : 260;
+      timelineTrack.scrollBy({ left: step * direction, behavior: 'smooth' });
+    };
+
+    btnLeft.addEventListener('click', () => scrollByOneCard(-1));
+    btnRight.addEventListener('click', () => scrollByOneCard(1));
+
+    positionEdgeHints();
+    updateEdgeHints();
+    timelineTrack.addEventListener('scroll', updateEdgeHints);
     window.addEventListener('resize', () => {
-      positionFades();
-      updateFades();
+      positionEdgeHints();
+      updateEdgeHints();
     });
   }
 }

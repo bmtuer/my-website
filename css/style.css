@@ -385,6 +385,56 @@ img {
   background: linear-gradient(to left, rgba(241, 231, 218, 0.95), rgba(241, 231, 218, 0));
 }
 
+/* Clickable scroll buttons — the fade alone wasn't a strong enough
+   affordance that the row is interactive. top/left/right set from JS
+   to center on .timeline-track's actual bounds, same as the fades. */
+.timeline-scroll-btn {
+  position: absolute;
+  /* top set from JS to .timeline-track's vertical center; translateY(-50%)
+     centers the button itself on that point */
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(245, 236, 224, 0.92);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.timeline-scroll-btn.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.timeline-scroll-btn:hover {
+  background: var(--terracotta);
+  color: var(--bg);
+}
+
+.timeline-scroll-btn:active {
+  transform: translateY(-50%) scale(0.94);
+}
+
+.timeline-scroll-btn-left {
+  left: 10px;
+}
+
+.timeline-scroll-btn-right {
+  right: 10px;
+}
+
 .timeline-header {
   padding: 28px 60px 20px;
   border-bottom: 1px solid rgba(138, 58, 52, 0.15);
@@ -1068,7 +1118,8 @@ img {
   }
 
   /* Vertical stack doesn't scroll horizontally — no edge hint needed */
-  .timeline-fade {
+  .timeline-fade,
+  .timeline-scroll-btn {
     display: none;
   }
 
