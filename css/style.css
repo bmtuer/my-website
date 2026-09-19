@@ -357,6 +357,34 @@ img {
   width: 100%;
 }
 
+/* Edge hints for the scrollable track below — the 5th entry has no
+   affordance otherwise and just silently sits off-screen. JS toggles
+   .is-visible on each based on scroll position. */
+.timeline-fade {
+  position: absolute;
+  /* top/height set from JS to match .timeline-track's actual position —
+     avoids hardcoding .timeline-header's height, which varies by breakpoint */
+  width: 56px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.timeline-fade.is-visible {
+  opacity: 1;
+}
+
+.timeline-fade-left {
+  left: 0;
+  background: linear-gradient(to right, rgba(241, 231, 218, 0.95), rgba(241, 231, 218, 0));
+}
+
+.timeline-fade-right {
+  right: 0;
+  background: linear-gradient(to left, rgba(241, 231, 218, 0.95), rgba(241, 231, 218, 0));
+}
+
 .timeline-header {
   padding: 28px 60px 20px;
   border-bottom: 1px solid rgba(138, 58, 52, 0.15);
@@ -1037,6 +1065,11 @@ img {
     align-items: stretch;
     padding: 24px 28px;
     gap: 28px;
+  }
+
+  /* Vertical stack doesn't scroll horizontally — no edge hint needed */
+  .timeline-fade {
+    display: none;
   }
 
   .timeline-item {
