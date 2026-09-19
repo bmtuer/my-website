@@ -367,6 +367,7 @@ img {
 .timeline-track {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   padding: 32px 40px;
   gap: 0;
   overflow: hidden;
@@ -480,6 +481,11 @@ img {
 
 .timeline-body {
   text-align: center;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 8px;
+  padding: 16px 18px;
+  width: 100%;
 }
 
 .timeline-role {
@@ -1010,6 +1016,7 @@ img {
   /* ── Work timeline → vertical stack ── */
   .timeline-track {
     flex-direction: column;
+    align-items: stretch;
     padding: 24px 28px;
     gap: 28px;
   }
@@ -1074,7 +1081,8 @@ img {
     grid-column: 2;
     grid-row: 2 / span 2;
     text-align: left;
-    padding-top: 0;
+    padding: 10px 14px;
+    margin-top: 4px;
   }
 
   .timeline-header {
