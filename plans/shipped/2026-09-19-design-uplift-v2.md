@@ -3,8 +3,8 @@
 ## Status
 - [ ] Drafting
 - [ ] Approved to start
-- [x] In progress
-- [ ] Shipped
+- [ ] In progress
+- [x] Shipped
 - [ ] Cancelled
 
 ## Problem

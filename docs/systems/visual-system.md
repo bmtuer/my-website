@@ -11,54 +11,62 @@
 - **Page transitions + nav effects + form handling:** `js/main.js`
 - **Static assets:** `assets/images/` (photos, logos), `assets/favicon.svg`
 
-## Color palette
+## Color palette — "Warm Ink" (as of Design Uplift v2)
 
-Defined in `css/style.css:4-12` as CSS custom properties on `:root`:
+Defined in `css/style.css:7-15` as CSS custom properties on `:root`:
 
 | Variable | Value | Role |
 |---|---|---|
-| `--bg` | `#F0EBE3` | Cream — page background, card fill, hero credit color on photos |
-| `--text` | `#1a1a1a` | Near-black — primary text, nameplate "Tuer" stroke |
-| `--teal` | `#2D6E7E` | Muted teal — secondary text, nav links, year markers, borders, smallcaps labels |
-| `--terracotta` | `#C8866A` | Coral — nameplate "Bryan", cursor `_`, CTAs, hover accents, list bullet markers |
+| `--bg` | `#F5ECE0` | Cream — page background, card fill, hero credit color on photos |
+| `--text` | `#241512` | Warm near-black — primary text, nameplate "Tuer" stroke |
+| `--ink` | `#8A3A34` | Deep maroon — secondary text, nav links, year markers, borders, smallcaps labels |
+| `--terracotta` | `#D89468` | Warm coral — nameplate "Bryan", cursor `_`, CTAs, hover accents, list bullet markers |
 | `--grey` | `#9a9a9a` | Mid-grey — currently unused; available for future muted text |
 
-Two fonts are loaded from Google Fonts (`css/style.css:2`):
-- **Display:** `'Tenor Sans'` — used for nameplate, card titles, role titles, year markers
+`--ink` was `--teal` (`#2D6E7E`, a cool color) through Design Uplift v1. It was recolored and renamed in v2 after checking the hero photo's actual dominant colors (all warm sunset peach and near-black/maroon brick — no teal anywhere in it) — `--ink` is now pulled from the photo's own brick-shadow tones instead of being an arbitrary cool accent.
+
+**When touching palette values:** every hardcoded RGB duplicate has to move too, not just the `:root` declarations — several rules use raw `rgba(45, 110, 126, …)` / `rgba(240, 235, 227, …)` instead of `var(--ink)` / `var(--bg)` (frosted-card shadows, scrollbar thumbs, hairline borders, the nameplate's own text-shadow). Grep the old hex/RGB triplet across `css/style.css` before considering a color change done.
+
+Three fonts are loaded from Google Fonts (`css/style.css:2`):
+- **Display:** `'Fraunces'` (variable font, opsz+wght axes, weights 400/500 imported) — used for nameplate, card titles, role titles, year markers. Was `'Tenor Sans'` through v1; swapped in v2 for more presence/character. Display headings run at weight 500 (was 400).
 - **Body:** `'Outfit'` — weights 300, 400, 500, 600 — everything else
 - Also loaded but used only on the nameplate: `'Bungee'` (solid) and `'Bungee Inline'` (striped). Bungee Inline = "Bryan" filled coral. Bungee = "Tuer" outlined dark.
 
 ## Type scale
 
-No formal scale variables. Values are inline on the rules where they apply. Effective scale (after the design-polish session):
+No formal scale variables. Values are inline on the rules where they apply. Effective scale (after Design Uplift v2):
 
 | Role | Size | Font | Treatment |
 |---|---|---|---|
-| Nameplate (Home) | `5.5rem` | Bungee + Bungee Inline | Two-tone, tracking 0.01em |
+| Nameplate (Home) | `5.5rem` | Bungee + Bungee Inline | Two-tone, tracking 0.01em, layered depth (see below) |
 | Nameplate (inner pages) | `3.5rem` | Bungee + Bungee Inline | Smaller so the card is the visual lead |
-| Card title | `2.8rem` | Tenor Sans | Letter-spacing 0.04em |
-| Year marker | `1.5rem` | Tenor Sans | Teal, 0.85 opacity, letter-spacing 0.06em — temporal anchor |
-| Role title | `1.35rem` | Tenor Sans | Tight line-height 1.25 |
-| Bento title | `1.25rem` | Tenor Sans | line-height 1.2 |
+| Card title | `2.8rem` | Fraunces 500 | Letter-spacing 0.04em |
+| Year marker | `1.5rem` | Fraunces 500 | Ink, 0.85 opacity, letter-spacing 0.06em — temporal anchor |
+| Role title | `1.35rem` | Fraunces 500 | Tight line-height 1.25 |
+| Bento title | `1.25rem` | Fraunces 500 | line-height 1.2 |
 | Body copy | `0.85rem` (timeline-desc), `0.84rem` (bento-desc) | Outfit 300 | line-height 1.6, opacity 0.78 |
 | Company name | `0.7rem` | Outfit 600 | Uppercase, letter-spacing 0.22em — smallcaps treatment |
 | Bento label | `0.6rem` | Outfit 600 | Uppercase, letter-spacing 0.22em |
 | Hero credit | `0.7rem` | Outfit 400 | Uppercase, letter-spacing 0.12em, cream with text-shadow |
 
-Pattern: prominent text uses Tenor Sans (display); utility text uses Outfit body weights. The contrast between display and body is intentional.
+Pattern: prominent text uses Fraunces (display, weight 500); utility text uses Outfit body weights. The contrast between display and body is intentional.
+
+### Nameplate depth treatment
+
+`.nav-name-first` ("Bryan") gets an offset text-shadow — a solid ink-colored layer plus a soft black blur — and `.nav-name-last` ("Tuer") gets a matching `drop-shadow` filter, for a screen-printed poster feel. Both use **em units**, not px, so the shadow scales down proportionally at the smaller inner-page nameplate size (`3.5rem`) instead of looking oversized relative to the smaller type.
 
 ## Card pattern (frosted glass)
 
 Three frosted-card variants exist (`.timeline-frosted`, `.contact-frosted`, `.play-frosted`) — same recipe, different containers:
 
 ```css
-background: rgba(236, 230, 221, 0.93);
+background: rgba(241, 231, 218, 0.93);
 border: 1px solid rgba(255, 255, 255, 0.9);
 box-shadow:
   0 1px 0 rgba(255, 255, 255, 1) inset,       /* top glass highlight */
   0 -1px 0 rgba(200, 190, 178, 0.6) inset,    /* bottom edge shadow */
   0 20px 80px rgba(0, 0, 0, 0.22),
-  0 4px 16px rgba(45, 110, 126, 0.1);
+  0 4px 16px rgba(138, 58, 52, 0.1);
 ```
 
 Architecture note: each card uses a *separate sibling element* for the frosted background (positioned absolute, behind the content). This is intentional — `backdrop-filter` on the card itself was bleeding into child images. The frosted pane lives outside the card's compositing group.
@@ -78,7 +86,7 @@ Inner pages share a fixed-position background image (`.bg-wrap`) that's globally
 .bg-wrap .hero-overlay {
   background: linear-gradient(
     to bottom,
-    rgba(240, 235, 227, 0.7) 0%,
+    rgba(245, 236, 224, 0.7) 0%,
     rgba(0, 0, 0, 0.25) 30%,
     rgba(0, 0, 0, 0.35) 60%,
     rgba(0, 0, 0, 0.55) 100%
@@ -98,6 +106,14 @@ Span classes:
 
 The asymmetric layout is deliberate. Don't rebalance to equal-column unless the content shape changes meaningfully.
 
+### Panel containment (desktop/tablet)
+
+`.play-card` is height-capped to `calc(100vh - 240px)` on desktop and `calc(100vh - 320px)` at the tablet breakpoint — matching `.content-wrap`'s vertical padding at each breakpoint exactly, since that padding is what reserves room for the fixed `.nav` and `.hero-footer`. Without the cap, tall bento content grows the whole page past the viewport, and because nav/footer are `position: fixed` and mostly transparent, the panel visually scrolls *behind* them instead of staying framed between them.
+
+`.bento-grid` itself scrolls internally (`overflow-y: auto`, `flex: 1`, `min-height: 0` on a `flex-direction: column` `.play-card`) for any content that doesn't fit, with a themed scrollbar — slim rounded ink thumb, no native arrow buttons, terracotta on hover (`::-webkit-scrollbar-*` plus `scrollbar-color`/`scrollbar-width` for Firefox).
+
+At the phone breakpoint (`≤480px`) both the cap and the internal scroll are undone (`.play-card { max-height: none }`, `.bento-grid { flex: none; overflow-y: visible }`) — `.nav` goes `position: absolute` and `.hero-page .hero-footer` goes `position: static` there, so the whole page scrolls in normal flow instead, and the cap would just clip content.
+
 ## Motion
 
 ### Page transitions (`js/main.js:1-18`)
@@ -112,8 +128,8 @@ The 0.40s offset means stagger starts *after* the body fade completes (0.35s) so
 
 ### Hover states
 
-- **Nav links** (`.nav-link:hover`) — color flips coral → teal, cursor `_` flips terracotta → teal. Visual rhyme: hover swaps the palette.
-- **Nameplate** — same coral → teal swap on the "Bryan" side; "Tuer" outline shifts.
+- **Nav links** (`.nav-link:hover`) — color flips coral → ink, cursor `_` flips terracotta → ink. Visual rhyme: hover swaps the palette.
+- **Nameplate** — same coral → ink swap on the "Bryan" side; "Tuer" outline shifts.
 - **Timeline icons** (`.timeline-image:hover`) — `transform: scale(1.06)` + lifted box-shadow, 0.2s ease. Just the icon, not the whole card row, to avoid implying false clickability.
 - **Bento links** (`.bento-link:hover`) — slight background lighten + 2px translateY lift; CTA letter-spacing widens 0.14em → 0.20em.
 - **Contact buttons** — `translateY(-1px)` lift on hover; arrow `→` translates 3px right.
@@ -145,7 +161,7 @@ The `.nav` container itself becomes `position: absolute` on phone (so the namepl
 
 ## Wayfinding
 
-`aria-current="page"` is set on the matching nav link in each HTML file (e.g. on `work.html`, the Work link has `aria-current="page"`). Currently used only by screen readers — there's no visual swap because adding one would compete with the existing coral→teal hover state and solve a problem that doesn't really exist on a 4-page site.
+`aria-current="page"` is set on the matching nav link in each HTML file (e.g. on `work.html`, the Work link has `aria-current="page"`). Currently used only by screen readers — there's no visual swap because adding one would compete with the existing coral→ink hover state and solve a problem that doesn't really exist on a 4-page site.
 
 ## What's not in this doc (and where to find it)
 
