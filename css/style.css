@@ -355,6 +355,13 @@ img {
   border-radius: 12px;
   overflow: hidden;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Same reserve as .play-card — .content-wrap's 140px top + 100px bottom
+     padding around the fixed nav/footer. Without this, a tall entry (e.g.
+     a long description) can push the card past the viewport and it
+     scrolls behind the fixed nav/footer instead of staying framed. */
+  max-height: calc(100vh - 240px);
 }
 
 /* Edge hints for the scrollable track below — the 5th entry has no
@@ -446,6 +453,8 @@ img {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  flex: 1;
+  min-height: 0;
   padding: 32px 40px 28px;
   gap: 0;
   overflow-x: auto;
@@ -638,6 +647,11 @@ img {
   border-radius: 12px;
   overflow: hidden;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Same reserve as .play-card/.timeline-card — .content-wrap's 140px top
+     + 100px bottom padding around the fixed nav/footer. */
+  max-height: calc(100vh - 240px);
 }
 
 .contact-header {
@@ -651,6 +665,37 @@ img {
   padding: 28px 44px 40px;
   position: relative;
   z-index: 1;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(138, 58, 52, 0.45) transparent;
+}
+
+.contact-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.contact-body::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+}
+
+.contact-body::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 4px 0;
+}
+
+.contact-body::-webkit-scrollbar-thumb {
+  background: rgba(138, 58, 52, 0.4);
+  border-radius: 8px;
+  border: 2px solid rgba(241, 231, 218, 0.93);
+  background-clip: padding-box;
+}
+
+.contact-body::-webkit-scrollbar-thumb:hover {
+  background: var(--terracotta);
+  background-clip: padding-box;
 }
 
 /* ── Direct contact links ── */
@@ -1109,12 +1154,22 @@ img {
     font-size: 2.2rem;
   }
 
+  /* Match the taller nav/footer reserve at this breakpoint (200px + 120px) */
+  .timeline-card {
+    max-height: calc(100vh - 320px);
+  }
+
   /* ── Work timeline → vertical stack ── */
   .timeline-track {
     flex-direction: column;
     align-items: stretch;
     padding: 24px 28px;
     gap: 28px;
+    /* Stack is now the tall axis, not a horizontal row — scroll vertically
+       within the capped card instead of clipping (overflow-y was `hidden`
+       for the desktop horizontal-scroll row). */
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   /* Vertical stack doesn't scroll horizontally — no edge hint needed */
@@ -1211,6 +1266,11 @@ img {
   }
 
   /* ── Contact ── */
+  /* Match the taller nav/footer reserve at this breakpoint (200px + 120px) */
+  .contact-card {
+    max-height: calc(100vh - 320px);
+  }
+
   .contact-header {
     padding: 24px 32px 16px;
   }
@@ -1340,6 +1400,15 @@ img {
     max-height: none;
   }
 
+  /* Same reasoning as .play-card above — undo the internal-scroll cap */
+  .timeline-card {
+    max-height: none;
+  }
+
+  .timeline-track {
+    overflow-y: visible;
+  }
+
   .bento-grid {
     grid-template-columns: 1fr;
     grid-auto-rows: auto;
@@ -1362,6 +1431,16 @@ img {
   .contact-links {
     flex-direction: column;
     gap: 10px;
+  }
+
+  /* Same reasoning as .play-card/.timeline-card above — nav/footer aren't
+     fixed at this breakpoint, so undo the internal-scroll cap */
+  .contact-card {
+    max-height: none;
+  }
+
+  .contact-body {
+    overflow-y: visible;
   }
 
   .contact-header {
