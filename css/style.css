@@ -890,7 +890,16 @@ img {
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 172px 172px auto;
+  /* minmax floor on row 3, not a bare `auto` -- .bento-grid's own box
+     height is fixed by flexbox (flex:1 in a height-capped .play-card),
+     not by its content, so plain `auto` can get starved down to almost
+     nothing on a short viewport once the two fixed rows above it eat
+     the container's height. min-height:0 further down (deliberately, so
+     the grid *can* shrink below content and let overflow-y:auto take
+     over) makes this worse, not better, without the floor. minmax keeps
+     row 3 readable; anything past what fits scrolls via .bento-grid's
+     own overflow-y instead of the row silently collapsing under its text. */
+  grid-template-rows: 172px 172px minmax(150px, auto);
   gap: 10px;
   padding: 20px 32px 28px;
   position: relative;
