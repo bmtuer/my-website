@@ -458,7 +458,11 @@ img {
   padding: 32px 40px 28px;
   gap: 0;
   overflow-x: auto;
-  overflow-y: hidden;
+  /* A single entry's description can be taller than the space this row
+     gets on a short viewport (.timeline-card is height-capped). Without
+     vertical scroll here too, that text is just permanently clipped with
+     no way to reach it -- auto instead of hidden lets it scroll into view. */
+  overflow-y: auto;
   position: relative;
   z-index: 1;
   cursor: grab;
@@ -472,6 +476,7 @@ img {
 
 .timeline-track::-webkit-scrollbar {
   height: 8px;
+  width: 8px;
 }
 
 .timeline-track::-webkit-scrollbar-button {
