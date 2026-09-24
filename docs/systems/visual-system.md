@@ -61,6 +61,7 @@ Tokens handle color and type. Where the two looks differ in *structure*, a `[dat
 
 - **Home hero** (`.hero`): Day is `intro | facts` over a full-width grayscale photo strip. Night is `intro` over `facts` on the left, with the dithered photo filling the right column (`grid-template-rows: auto 1fr` keeps facts tucked under the intro). `.intro`, `.facts` and `.hero-photo` carry `view-transition-name`s, so switching morphs them into place.
 - **Work** (`.track` / `.job`): Day uses hairline-separated columns. Night uses bordered panels with a header bar (amber year, green "● current").
+- **Work footnote:** a `.fn-mark` asterisk (accent color) after a company name links to a `.footnote` under the track (used for the Grammarly/Superhuman rename).
 - **Life** (`.life-grid`): Day draws hairlines with a **1px gap over a `--line` background** (no per-cell borders, so wide cells never break the lines). Night uses a 12px gap and bordered panels.
 - **Labels** (`.label`): Day is gray mono uppercase. Night is amber with a small square bullet.
 - **Facts** (`.facts dl`): Day is a ruled spec table. Night is an unruled key/value list with blue keys.
@@ -71,6 +72,7 @@ Tokens handle color and type. Where the two looks differ in *structure*, a `[dat
 
 - Day: canvas hidden, img grayscale, color on `.reveal:hover` / `:focus-visible`.
 - Night: canvas shown, and it fades out on `.reveal:hover` / `:focus-visible` to reveal the photo.
+- Life photos crop to **portrait 3:4** (most are photos of people); set each photo's focus with both `style="object-position"` on the img and matching `data-x`/`data-y` on the canvas, or Day and Night will frame it differently.
 - `js/main.js` draws each canvas once on load: cover-crop (focus via `data-x` / `data-y`, 0–1), then Bayer 4×4 ordered dither. Canvas pixel size is the `width`/`height` attributes; CSS scales it up with `image-rendering: pixelated`.
 - **`file://` previews:** browsers block `getImageData` there, so Night shows the undithered photo. Serve over http to see it properly.
 
