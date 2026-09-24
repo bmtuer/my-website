@@ -3,46 +3,186 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bryan Tuer — Support Operations Leader in Baltimore</title>
-  <meta name="description" content="Bryan Tuer is a support operations leader at Superhuman (Grammarly), based in Baltimore. Former teacher turned customer experience and support tooling specialist." />
+  <title>Bryan Tuer · Support Operations at Superhuman</title>
+  <meta name="description" content="Bryan Tuer builds and runs the systems behind customer support at Superhuman. Former high school teacher, based in Baltimore. Work history, life outside work, and how to get in touch." />
   <link rel="canonical" href="https://bmtuer.com/" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Bryan Tuer" />
   <meta property="og:url" content="https://bmtuer.com/" />
-  <meta property="og:title" content="Bryan Tuer — Support Operations Leader in Baltimore" />
-  <meta property="og:description" content="Bryan Tuer is a support operations leader at Superhuman (Grammarly), based in Baltimore. Former teacher turned customer experience and support tooling specialist." />
+  <meta property="og:title" content="Bryan Tuer · Support Operations at Superhuman" />
+  <meta property="og:description" content="Bryan Tuer builds and runs the systems behind customer support at Superhuman. Former high school teacher, based in Baltimore. Work history, life outside work, and how to get in touch." />
   <meta property="og:image" content="https://bmtuer.com/assets/images/hero.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <meta name="color-scheme" content="light dark" />
+  <!-- Pick Day or Night before first paint: saved choice, else the OS setting. -->
+  <script>
+    (function () {
+      var look = null;
+      try { look = localStorage.getItem('bt-look'); } catch (e) {}
+      if (look !== 'day' && look !== 'night') {
+        look = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
+      }
+      document.documentElement.setAttribute('data-look', look);
+    })();
+  </script>
+
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <div class="page" id="top">
+    <header class="nav">
+      <a class="brand" href="#top">Bryan Tuer</a>
+      <div class="nav-right">
+        <nav aria-label="Pages"><ul class="nav-links">
+          <li><a href="#top" class="nav-link" data-text="home">home</a></li>
+          <li><a href="#work" class="nav-link" data-text="work">work</a></li>
+          <li><a href="#life" class="nav-link" data-text="life">life</a></li>
+          <li><a href="#contact" class="nav-link" data-text="contact">contact</a></li>
+        </ul></nav>
+        <button class="look-switch" type="button" role="switch" aria-checked="false" aria-label="Night look">
+          <span class="look-day" aria-hidden="true">Day</span><span class="look-night" aria-hidden="true">Night</span>
+        </button>
+      </div>
+    </header>
 
-  <nav class="nav">
-    <a href="index.html" class="nav-name"><span class="nav-name-first">Bryan </span><span class="nav-name-last">Tuer</span></a>
-    <ul class="nav-links">
-      <li><a href="index.html" class="nav-link" data-text="Home" aria-current="page">Home<span class="cursor">_</span></a></li>
-      <li><a href="work.html" class="nav-link" data-text="Work">Work<span class="cursor">_</span></a></li>
-      <li><a href="life.html" class="nav-link" data-text="Life">Life<span class="cursor">_</span></a></li>
-      <li><a href="contact.html" class="nav-link" data-text="Contact">Contact<span class="cursor">_</span></a></li>
-    </ul>
-  </nav>
+    <main>
+      <section class="hero" aria-label="Intro">
+        <div class="intro">
+          <p class="label">Introduction</p>
+          <h1 class="statement">Welcome<span class="cursor" aria-hidden="true"></span></h1>
+          <p class="sub">I work in support operations at Superhuman. I look after the tools and systems our support team uses every day, and sometimes build new ones.</p>
+          <p class="sub">Before tech I taught high school social studies. I live in Baltimore with my wife, my son and a dog named Maya.</p>
+        </div>
 
-  <main class="hero">
-    <div class="hero-image-wrap">
-      <img src="assets/images/hero.jpg" alt="Baltimore rowhomes at sunset" class="hero-image" />
-      <div class="hero-overlay"></div>
-    </div>
-    <div class="hero-footer">
-  <span class="hero-credit">
-    <strong>Baltimore, MD</strong> — Photo by 
-    <a href="https://unsplash.com/photos/a-view-of-a-city-skyline-at-sunset-XRwb892hC5U" target="_blank">Yianni Mathioudakis</a> 
-    on Unsplash
-  </span>
-</div>
-  </main>
+        <div class="facts">
+          <h2 class="label">Quick facts</h2>
+          <dl>
+            <dt>Works on</dt><dd>Support tooling, workflows, CX</dd>
+            <dt>Team</dt><dd>Support Operations, Superhuman</dd>
+            <dt>Before</dt><dd>High school teacher</dd>
+            <dt>Lives in</dt><dd>Baltimore, MD</dd>
+            <dt>Status</dt><dd>Happily employed, down to talk shop or life</dd>
+          </dl>
+        </div>
+
+        <figure class="hero-photo">
+          <div class="pic">
+            <img src="assets/images/hero.jpg" alt="Baltimore rowhomes and skyline at dusk" />
+            <canvas class="dither" data-src="assets/images/hero.jpg" data-y="0.62" width="340" height="300" aria-hidden="true"></canvas>
+          </div>
+          <figcaption>
+            <span>Baltimore, MD</span>
+            <span>Photo: <a href="https://unsplash.com/photos/a-view-of-a-city-skyline-at-sunset-XRwb892hC5U" target="_blank" rel="noopener">Yianni Mathioudakis</a> / Unsplash</span>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="section" id="work" aria-labelledby="work-title">
+        <div class="section-head">
+          <h2 class="label" id="work-title">Work <span class="meta">2015 → now</span></h2>
+        </div>
+        <div class="track">
+          <article class="job">
+            <header><span class="yr">2026</span><span class="now">current</span></header>
+            <h3>Senior Support Operations Manager</h3>
+            <span class="co">Superhuman</span>
+            <p>I build and maintain support operations and internal support tools :)</p>
+          </article>
+          <article class="job">
+            <header><span class="yr">2024</span></header>
+            <h3>Senior Delight Specialist</h3>
+            <span class="co">Superhuman<a class="fn-mark" href="#fn-rebrand" aria-label="Footnote">*</a></span>
+            <p>Led Zendesk migration. Built customer support tooling. Led enablement for enterprise security program.</p>
+          </article>
+          <article class="job">
+            <header><span class="yr">2023</span></header>
+            <h3>Delight Specialist</h3>
+            <span class="co">Superhuman</span>
+            <p>Built help center content. Led compliance fulfillment processes. Acted as VoC to multiple EPD pods. Provided VIP technical support.</p>
+          </article>
+          <article class="job">
+            <header><span class="yr">2022</span></header>
+            <h3>Onboarding Specialist</h3>
+            <span class="co">Superhuman</span>
+            <p>Became a PX across many email clients and workflows. Onboarded hundreds of customers live. Led self-serve motion.</p>
+          </article>
+          <article class="job">
+            <header><span class="yr">2015</span></header>
+            <h3>Social Studies Teacher</h3>
+            <span class="co">Baltimore County Public Schools</span>
+            <p>Taught AP Psychology, World History, and American Government to high school students in Baltimore.</p>
+          </article>
+        </div>
+        <p class="footnote" id="fn-rebrand"><span class="fn-mark" aria-hidden="true">*</span> Superhuman was acquired by Grammarly in 2025, and then Grammarly rebranded as Superhuman.</p>
+      </section>
+
+      <section class="section" id="life" aria-labelledby="life-title">
+        <div class="section-head">
+          <h2 class="label" id="life-title">Life <span class="meta hint-hover">hover a photo</span><span class="meta hint-tap">tap a photo</span></h2>
+        </div>
+        <div class="life-grid">
+          <div class="cell wide reveal" tabindex="0">
+            <div class="pic-pair">
+              <div class="pic"><img src="assets/images/family.jpg" alt="Bryan and his wife" loading="lazy" style="object-position: center 40%;" /><canvas class="dither" data-src="assets/images/family.jpg" data-y="0.4" width="180" height="240" aria-hidden="true"></canvas></div>
+              <div class="pic"><img src="assets/images/son.jpg" alt="Bryan with his son in a stroller" loading="lazy" style="object-position: center 20%;" /><canvas class="dither" data-src="assets/images/son.jpg" data-y="0.2" width="180" height="240" aria-hidden="true"></canvas></div>
+            </div>
+            <div class="cell-text"><h3>Family</h3><p>My wife and son, the center of my universe.</p></div>
+          </div>
+          <div class="cell reveal" tabindex="0">
+            <div class="pic"><img src="assets/images/baltimore.jpg" alt="Bryan in Baltimore" loading="lazy" /><canvas class="dither" data-src="assets/images/baltimore.jpg" width="180" height="240" aria-hidden="true"></canvas></div>
+            <div class="cell-text"><h3>Baltimore</h3><p>Moved in 2015, never looked back.</p></div>
+          </div>
+          <div class="cell reveal" tabindex="0">
+            <div class="pic"><img src="assets/images/dog.jpg" alt="Maya the dog curled up with Bryan" loading="lazy" style="object-position: 69% center;" /><canvas class="dither" data-src="assets/images/dog.jpg" data-x="0.69" width="180" height="240" aria-hidden="true"></canvas></div>
+            <div class="cell-text"><h3>Maya</h3><p>Chief Barking Officer.</p></div>
+          </div>
+          <div class="cell">
+            <div class="cell-text"><h3>Music</h3><p>Indie, alternative, electronica, and open to anything new.</p><a class="cell-link" href="https://www.last.fm/user/terribad" target="_blank" rel="noopener">Last.fm →</a></div>
+          </div>
+          <div class="cell">
+            <div class="cell-text"><h3>Video games</h3><p>MMORPGs, roguelikes, and card games. Fascinated by virtual worlds.</p><a class="cell-link" href="https://steamcommunity.com/id/fluxist" target="_blank" rel="noopener">Steam →</a></div>
+          </div>
+          <div class="cell wide">
+            <div class="cell-text"><h3>Also into</h3>
+              <ul class="chips"><li>history</li><li>psychology</li><li>economics</li><li>current events</li><li>software internals</li><li>technology</li><li>urbanism</li><li>running</li><li>food</li><li>coffee</li><li>vinyl records</li><li>baseball</li><li>orioles</li><li>futbol</li><li>man city</li></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact" aria-labelledby="contact-title">
+        <div class="section-head">
+          <h2 class="label" id="contact-title">Contact <span class="meta">leave a note</span></h2>
+        </div>
+            <form class="note-form" action="https://formspree.io/f/xdawbdeq" method="POST">
+              <div class="field">
+                <label for="email">Your email</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+              </div>
+              <div class="field">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" placeholder="What's on your mind?" required />
+              </div>
+              <div class="field field-wide">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="7" placeholder="Say hello..." required></textarea>
+              </div>
+              <button type="submit" class="btn">Send it →</button>
+            </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Say hi: <a href="mailto:bmtuer@gmail.com">email</a> · <a href="https://www.linkedin.com/in/bryantuer/" target="_blank" rel="noopener">LinkedIn →</a></span>
+      <span>© 2026 bmtuer</span>
+    </footer>
+  </div>
 
   <script src="js/main.js"></script>
 </body>
