@@ -313,8 +313,10 @@ button, input, textarea { font: inherit; color: inherit; }
   border-top: 1px solid var(--line);
   view-transition-name: photo;
 }
-.hero-photo .pic { aspect-ratio: auto; height: 220px; }
-.hero-photo .pic img,
+.hero-photo .pic { aspect-ratio: auto; height: 260px; }
+/* Day's wide strip sits higher to keep the skyline in; Night's tall column
+   (the canvas, cropped by data-y in the HTML) keeps the rooftops. */
+.hero-photo .pic img { object-position: center 40%; }
 .hero-photo .pic canvas { object-position: center 62%; }
 .hero-photo figcaption {
   display: flex;
