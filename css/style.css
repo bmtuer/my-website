@@ -167,13 +167,14 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .nav-right { display: flex; align-items: center; gap: 12px 24px; flex-wrap: wrap; }
 .nav-links { display: flex; gap: 20px; list-style: none; font-family: var(--f-mono); font-size: 0.8rem; }
-.nav-link { text-decoration: none; color: var(--text); }
-.nav-link:hover { color: var(--acc); }
+.nav-link { position: relative; text-decoration: none; color: var(--text); text-underline-offset: 5px; }
+.nav-link:hover { color: var(--ink); text-decoration: underline; }
 .nav-link[aria-current] { color: var(--acc); }
 [data-look="night"] .nav-link { color: var(--mute); }
-[data-look="night"] .nav-link:hover,
+[data-look="night"] .nav-link:hover { color: var(--ink); text-decoration: none; }
 [data-look="night"] .nav-link[aria-current] { color: var(--acc); }
-[data-look="night"] .nav-link[aria-current]::before { content: '> '; }
+/* The ">" marker sits outside the link box so moving it never shifts the other links */
+[data-look="night"] .nav-link[aria-current]::before { content: '>'; position: absolute; right: 100%; margin-right: 0.6ch; }
 
 /* Day / Night switch */
 .look-switch {
@@ -232,6 +233,9 @@ button, input, textarea { font: inherit; color: inherit; }
 
 /* ── Sections (Work / Life / Contact) ── */
 .section { padding-top: 72px; }
+/* Tall enough that the page can always scroll a clicked section to the top,
+   even on tall screens (viewport − scroll offset − footer). */
+.section:last-of-type { min-height: calc(100vh - 124px); }
 .section-head { padding-bottom: 16px; }
 
 /* ── Photos: grayscale (Day) / dithered (Night), real on hover ── */
@@ -245,13 +249,23 @@ button, input, textarea { font: inherit; color: inherit; }
   object-fit: cover;
 }
 .pic img { filter: grayscale(1) contrast(1.05); transition: filter 0.3s ease; }
+.hint-tap { display: none; }
 .pic canvas { image-rendering: pixelated; opacity: 0; transition: opacity 0.35s ease; }
-.reveal:hover .pic img,
+/* Hover reveals one photo at a time; keyboard focus on a cell reveals all of its photos */
+.pic:hover img,
 .reveal:focus-visible .pic img { filter: none; }
 [data-look="night"] .pic img { filter: none; }
 [data-look="night"] .pic canvas { opacity: 1; }
-[data-look="night"] .reveal:hover .pic canvas,
+[data-look="night"] .pic:hover canvas,
 [data-look="night"] .reveal:focus-visible .pic canvas { opacity: 0; }
+
+/* Touch screens: tapping a tile (it's focusable) reveals its photos */
+@media (hover: none) {
+  .hint-hover { display: none; }
+  .hint-tap { display: inline; }
+  .reveal:focus .pic img { filter: none; }
+  [data-look="night"] .reveal:focus .pic canvas { opacity: 0; }
+}
 
 /* ═══════════ Home ═══════════ */
 .hero {
@@ -433,7 +447,7 @@ button, input, textarea { font: inherit; color: inherit; }
   color: var(--ink);
   font-size: 0.92rem;
 }
-.field textarea { resize: vertical; min-height: 104px; }
+.field textarea { resize: vertical; min-height: 180px; }
 .field input::placeholder,
 .field textarea::placeholder { color: var(--mute); }
 .field input:focus,
@@ -516,6 +530,7 @@ button, input, textarea { font: inherit; color: inherit; }
 
   html { scroll-padding-top: 64px; } /* nav wraps to two rows (~99px); sections pad 56px */
   .section { padding-top: 56px; }
+  .section:last-of-type { min-height: calc(100vh - 170px); }
 
   .life-grid { grid-template-columns: 1fr 1fr; }
 

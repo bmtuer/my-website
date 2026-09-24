@@ -70,8 +70,11 @@ Tokens handle color and type. Where the two looks differ in *structure*, a `[dat
 
 `.pic` holds an `<img>` and a `<canvas class="dither" data-src>` stacked on top of it.
 
-- Day: canvas hidden, img grayscale, color on `.reveal:hover` / `:focus-visible`.
-- Night: canvas shown, and it fades out on `.reveal:hover` / `:focus-visible` to reveal the photo.
+- Day: canvas hidden, img grayscale, color on hover.
+- Night: canvas shown, and it fades out on hover to reveal the photo.
+- Hover is **per photo** (`.pic:hover`), so the Family pair reveals one photo at a time. Keyboard focus on a `.reveal` cell reveals all its photos.
+- Touch screens (`@media (hover: none)`): tapping a `.reveal` cell (it has `tabindex="0"`) reveals it, and the Life label swaps "hover a photo" for "tap a photo" (`.hint-hover` / `.hint-tap`).
+- Canvas resolution: hero 340×300, Life 180×240. Much lower and faces stop being recognizable.
 - Life photos crop to **portrait 3:4** (most are photos of people); set each photo's focus with both `style="object-position"` on the img and matching `data-x`/`data-y` on the canvas, or Day and Night will frame it differently.
 - `js/main.js` draws each canvas once on load: cover-crop (focus via `data-x` / `data-y`, 0–1), then Bayer 4×4 ordered dither. Canvas pixel size is the `width`/`height` attributes; CSS scales it up with `image-rendering: pixelated`.
 - **`file://` previews:** browsers block `getImageData` there, so Night shows the undithered photo. Serve over http to see it properly.
@@ -79,7 +82,9 @@ Tokens handle color and type. Where the two looks differ in *structure*, a `[dat
 ## Motion
 
 - **Nav jumps:** the nav is `position: sticky`; links are in-page anchors with `scroll-behavior: smooth`. `html { scroll-padding-top }` is tuned so a section's label lands ~24px below the nav (20px desktop, 64px under 760px where the nav wraps to two rows). If the nav height or `.section` padding changes, retune it.
-- **Scroll-spy:** an IntersectionObserver in `js/main.js` sets `aria-current` on the nav link for the section crossing ~35% down the viewport; at the very bottom of the page the last section (Contact) wins.
+- **Scroll-spy:** an IntersectionObserver in `js/main.js` sets `aria-current` on the nav link for the section crossing ~35% down the viewport. A nav click marks its target immediately and pauses the spy until the smooth scroll ends (`scrollend`, 1.2s fallback), so the highlight doesn't flicker through the sections in between.
+- **Last-section min-height:** `.section:last-of-type` has `min-height: calc(100vh - 124px)` (170px on phones) so every section, Contact included, can scroll to the top on any screen height. Without it, tall screens couldn't reach Life/Contact and the highlight was wrong. This is why there's open space under the contact form.
+- **Nav states:** hover is ink + underline (Day) or bright ink (Night); current is the accent color. Night's `>` marker on the current link is absolutely positioned outside the link, so moving it never shifts the other links.
 - **Look switch:** same-document View Transition (see above).
 - **Cursor:** blinking block after the home statement, Night only.
 - **Nav scramble:** letters scramble on hover (`js/main.js`), skipped under reduced motion.

@@ -138,19 +138,23 @@ function markCurrent(id) {
   });
 }
 
+// After a nav click, show the destination right away and ignore the spy
+// while the smooth scroll passes through the sections in between.
+let spyPausedUntil = 0;
+navLinks.forEach(link => link.addEventListener('click', () => {
+  markCurrent(link.getAttribute('href').slice(1));
+  spyPausedUntil = Date.now() + 1200;
+}));
+window.addEventListener('scrollend', () => { spyPausedUntil = 0; });
+
 if (sections.length && 'IntersectionObserver' in window) {
   // A section counts as "current" once it crosses a line ~35% down the viewport.
+  // (The last section has a min-height in CSS so it always reaches that line.)
   const spy = new IntersectionObserver(entries => {
+    if (Date.now() < spyPausedUntil) return;
     entries.forEach(entry => { if (entry.isIntersecting) markCurrent(entry.target.id); });
   }, { rootMargin: '-35% 0px -64% 0px' });
   sections.forEach(section => spy.observe(section));
-
-  // The last section may be too short to reach that line; mark it at the bottom of the page.
-  window.addEventListener('scroll', () => {
-    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
-      markCurrent(sections[sections.length - 1].id);
-    }
-  }, { passive: true });
 }
 
 // ── Scramble effect on nav links ──
