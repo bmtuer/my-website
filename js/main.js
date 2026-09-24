@@ -138,24 +138,50 @@ function markCurrent(id) {
   });
 }
 
-// After a nav click, show the destination right away and ignore the spy
-// while the smooth scroll passes through the sections in between.
-let spyPausedUntil = 0;
+// Sections near the bottom can't always scroll all the way up (there's no
+// filler below Contact), so a click keeps its own link highlighted wherever
+// the page comes to rest. The spy only takes over again once the reader
+// scrolls on their own.
+let clickedUntilScrollEnds = false;
+let clickFallback = null;
+
 navLinks.forEach(link => link.addEventListener('click', () => {
   markCurrent(link.getAttribute('href').slice(1));
-  spyPausedUntil = Date.now() + 1200;
+  clickedUntilScrollEnds = true;
+  clearTimeout(clickFallback);
+  // If the page is already where the link points, no scroll (or scrollend) happens.
+  clickFallback = setTimeout(() => { clickedUntilScrollEnds = false; }, 1500);
 }));
-window.addEventListener('scrollend', () => { spyPausedUntil = 0; });
 
-if (sections.length && 'IntersectionObserver' in window) {
-  // A section counts as "current" once it crosses a line ~35% down the viewport.
-  // (The last section has a min-height in CSS so it always reaches that line.)
-  const spy = new IntersectionObserver(entries => {
-    if (Date.now() < spyPausedUntil) return;
-    entries.forEach(entry => { if (entry.isIntersecting) markCurrent(entry.target.id); });
-  }, { rootMargin: '-35% 0px -64% 0px' });
-  sections.forEach(section => spy.observe(section));
+// Reader-driven scrolling: the current section is the last one whose top has
+// passed a line ~35% down the viewport; at the very bottom of the page, the
+// last section wins.
+let userScrolled = false;
+['wheel', 'touchmove', 'keydown', 'mousedown'].forEach(type =>
+  window.addEventListener(type, () => { userScrolled = true; }, { passive: true }));
+
+function updateSpy() {
+  const line = window.innerHeight * 0.35;
+  const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+  let current = sections[0];
+  sections.forEach(section => { if (section.getBoundingClientRect().top <= line) current = section; });
+  if (atBottom) current = sections[sections.length - 1];
+  markCurrent(current.id);
 }
+
+let spyTicking = false;
+window.addEventListener('scroll', () => {
+  if (clickedUntilScrollEnds && !userScrolled) return;
+  if (clickedUntilScrollEnds && userScrolled) clickedUntilScrollEnds = false;
+  if (spyTicking) return;
+  spyTicking = true;
+  requestAnimationFrame(() => { spyTicking = false; updateSpy(); });
+}, { passive: true });
+
+// A nav click itself counts as a mousedown; reset so only scrolling *after* the click counts.
+navLinks.forEach(link => link.addEventListener('click', () => { userScrolled = false; }));
+
+if (sections.length) updateSpy();
 
 // ── Scramble effect on nav links ──
 const chars = 'abcdefghijklmnopqrstuvwxyz';

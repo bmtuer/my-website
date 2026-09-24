@@ -18,7 +18,7 @@ The Night look borrows terminal *visuals* only. Copy stays in plain English: no 
 - **All visual rules:** `css/style.css` (single file, no build step)
 - **Look switch, dither, form, drag-scroll, nav scramble:** `js/main.js`
 - **Initial look (no-flash):** inline `<script>` in every page's `<head>`
-- **The site:** `index.html` — one page with four sections: `#top` (hero), `#work`, `#life`, `#contact`
+- **The site:** `index.html` — one page with four sections: `#top` (the `.page` wrapper; hero is first inside it), `#work`, `#life`, `#contact`
 - **Old URLs:** `work.html`, `life.html`, `contact.html` are redirect stubs to `index.html#work` / `#life` / `#contact` (meta refresh + `location.replace`, `noindex`, canonical to the anchor). Keep them so old links from LinkedIn/search still land.
 - **Fonts:** Google Fonts `<link>` in each page's `<head>` (Geist 400/500/600, Geist Mono 400/500, JetBrains Mono 400/500/700)
 
@@ -82,8 +82,8 @@ Tokens handle color and type. Where the two looks differ in *structure*, a `[dat
 ## Motion
 
 - **Nav jumps:** the nav is `position: sticky`; links are in-page anchors with `scroll-behavior: smooth`. `html { scroll-padding-top }` is tuned so a section's label lands ~24px below the nav (20px desktop, 64px under 760px where the nav wraps to two rows). If the nav height or `.section` padding changes, retune it.
-- **Scroll-spy:** an IntersectionObserver in `js/main.js` sets `aria-current` on the nav link for the section crossing ~35% down the viewport. A nav click marks its target immediately and pauses the spy until the smooth scroll ends (`scrollend`, 1.2s fallback), so the highlight doesn't flicker through the sections in between.
-- **Last-section min-height:** `.section:last-of-type` has `min-height: calc(100vh - 124px)` (170px on phones) so every section, Contact included, can scroll to the top on any screen height. Without it, tall screens couldn't reach Life/Contact and the highlight was wrong. This is why there's open space under the contact form.
+- **Jump targets:** "home" targets `#top` on the `.page` wrapper (true top of the page). Work and Life scroll as far as the page allows. Contact is the last section, so it lands at the bottom of the page. There's deliberately **no filler** below Contact: an earlier min-height fix that let every section reach the top left a huge empty gap under the form, and was rejected.
+- **Scroll-spy** (`js/main.js`, scroll-based): the current section is the last one whose top has passed ~35% down the viewport; at the very bottom of the page, Contact wins. A nav click marks its own link and holds it until the reader scrolls themselves (wheel/touch/key/mouse), because on tall screens Life and Contact can land on the same scroll position.
 - **Nav states:** hover is ink + underline (Day) or bright ink (Night); current is the accent color. Night's `>` marker on the current link is absolutely positioned outside the link, so moving it never shifts the other links.
 - **Look switch:** same-document View Transition (see above).
 - **Cursor:** blinking block after the home statement, Night only.

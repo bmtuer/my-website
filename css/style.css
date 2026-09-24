@@ -233,9 +233,6 @@ button, input, textarea { font: inherit; color: inherit; }
 
 /* ── Sections (Work / Life / Contact) ── */
 .section { padding-top: 72px; }
-/* Tall enough that the page can always scroll a clicked section to the top,
-   even on tall screens (viewport − scroll offset − footer). */
-.section:last-of-type { min-height: calc(100vh - 124px); }
 .section-head { padding-bottom: 16px; }
 
 /* ── Photos: grayscale (Day) / dithered (Night), real on hover ── */
@@ -530,7 +527,6 @@ button, input, textarea { font: inherit; color: inherit; }
 
   html { scroll-padding-top: 64px; } /* nav wraps to two rows (~99px); sections pad 56px */
   .section { padding-top: 56px; }
-  .section:last-of-type { min-height: calc(100vh - 170px); }
 
   .life-grid { grid-template-columns: 1fr 1fr; }
 
