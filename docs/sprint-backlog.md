@@ -6,11 +6,12 @@ When a sprint closes, clear this file and pull the next batch. Shipped items don
 
 ## Sprint theme
 
-*(Sprint cleared — design uplift v2 shipped 2026-09-19. Next sprint to be themed when the next batch of work is queued up.)*
+**Day / Night Redesign.** Move off the preppy Warm Ink look to two switchable looks that read savvy, not flashy.
 
 ## Active
 
-*(None.)*
+- **Day / Night redesign** (Design, P1). Plan: `plans/active/2026-09-24-day-night-redesign.md`. Built on branch, awaiting Bryan's review.
+- **Content rework** (Content, P1). Bryan's, after the redesign lands.
 
 ## Blocked / carry-over (long-running)
 

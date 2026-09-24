@@ -3,46 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bryan Tuer — Support Operations Leader in Baltimore</title>
-  <meta name="description" content="Bryan Tuer is a support operations leader at Superhuman (Grammarly), based in Baltimore. Former teacher turned customer experience and support tooling specialist." />
+  <title>Bryan Tuer · Support Operations at Superhuman</title>
+  <meta name="description" content="Bryan Tuer builds and runs the systems behind customer support at Superhuman. Former high school teacher, based in Baltimore." />
   <link rel="canonical" href="https://bmtuer.com/" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Bryan Tuer" />
   <meta property="og:url" content="https://bmtuer.com/" />
-  <meta property="og:title" content="Bryan Tuer — Support Operations Leader in Baltimore" />
-  <meta property="og:description" content="Bryan Tuer is a support operations leader at Superhuman (Grammarly), based in Baltimore. Former teacher turned customer experience and support tooling specialist." />
+  <meta property="og:title" content="Bryan Tuer · Support Operations at Superhuman" />
+  <meta property="og:description" content="Bryan Tuer builds and runs the systems behind customer support at Superhuman. Former high school teacher, based in Baltimore." />
   <meta property="og:image" content="https://bmtuer.com/assets/images/hero.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <meta name="color-scheme" content="light dark" />
+  <!-- Pick Day or Night before first paint: saved choice, else the OS setting. -->
+  <script>
+    (function () {
+      var look = null;
+      try { look = localStorage.getItem('bt-look'); } catch (e) {}
+      if (look !== 'day' && look !== 'night') {
+        look = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
+      }
+      document.documentElement.setAttribute('data-look', look);
+    })();
+  </script>
+
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <div class="page">
+    <header class="nav">
+      <a class="brand" href="index.html">Bryan Tuer <small>support ops · baltimore</small></a>
+      <div class="nav-right">
+        <nav aria-label="Pages"><ul class="nav-links">
+          <li><a href="index.html" class="nav-link" data-text="home" aria-current="page">home</a></li>
+          <li><a href="work.html" class="nav-link" data-text="work">work</a></li>
+          <li><a href="life.html" class="nav-link" data-text="life">life</a></li>
+          <li><a href="contact.html" class="nav-link" data-text="contact">contact</a></li>
+        </ul></nav>
+        <button class="look-switch" type="button" role="switch" aria-checked="false" aria-label="Night look">
+          <span class="look-day" aria-hidden="true">Day</span><span class="look-night" aria-hidden="true">Night</span>
+        </button>
+      </div>
+    </header>
 
-  <nav class="nav">
-    <a href="index.html" class="nav-name"><span class="nav-name-first">Bryan </span><span class="nav-name-last">Tuer</span></a>
-    <ul class="nav-links">
-      <li><a href="index.html" class="nav-link" data-text="Home" aria-current="page">Home<span class="cursor">_</span></a></li>
-      <li><a href="work.html" class="nav-link" data-text="Work">Work<span class="cursor">_</span></a></li>
-      <li><a href="life.html" class="nav-link" data-text="Life">Life<span class="cursor">_</span></a></li>
-      <li><a href="contact.html" class="nav-link" data-text="Contact">Contact<span class="cursor">_</span></a></li>
-    </ul>
-  </nav>
+    <main class="hero">
+      <div class="intro">
+        <p class="label">Hello</p>
+        <h1 class="statement">I build and run the systems behind support at Superhuman.<span class="cursor" aria-hidden="true"></span></h1>
+        <p class="sub">Zendesk, internal tools, help center and the behind-the-scenes plumbing that keeps a support team fast. Before tech, I taught high school social studies.</p>
+      </div>
 
-  <main class="hero">
-    <div class="hero-image-wrap">
-      <img src="assets/images/hero.jpg" alt="Baltimore rowhomes at sunset" class="hero-image" />
-      <div class="hero-overlay"></div>
-    </div>
-    <div class="hero-footer">
-  <span class="hero-credit">
-    <strong>Baltimore, MD</strong> — Photo by 
-    <a href="https://unsplash.com/photos/a-view-of-a-city-skyline-at-sunset-XRwb892hC5U" target="_blank">Yianni Mathioudakis</a> 
-    on Unsplash
-  </span>
-</div>
-  </main>
+      <section class="facts" aria-labelledby="facts-label">
+        <h2 class="label" id="facts-label">Quick facts</h2>
+        <dl>
+          <dt>Works on</dt><dd>Support tooling, workflows, help center</dd>
+          <dt>Team</dt><dd>Support operations, Superhuman</dd>
+          <dt>Before</dt><dd>High school teacher</dd>
+          <dt>Lives in</dt><dd>Baltimore, MD</dd>
+          <dt>Open to</dt><dd>Talking shop about support ops</dd>
+        </dl>
+      </section>
+
+      <figure class="hero-photo">
+        <div class="pic">
+          <img src="assets/images/hero.jpg" alt="Baltimore rowhomes and skyline at dusk" />
+          <canvas class="dither" data-src="assets/images/hero.jpg" data-y="0.62" width="340" height="300" aria-hidden="true"></canvas>
+        </div>
+        <figcaption>
+          <span>Baltimore, MD</span>
+          <span>Photo: <a href="https://unsplash.com/photos/a-view-of-a-city-skyline-at-sunset-XRwb892hC5U" target="_blank" rel="noopener">Yianni Mathioudakis</a> / Unsplash</span>
+        </figcaption>
+      </figure>
+    </main>
+
+    <footer class="footer">
+      <span>Say hi: <a href="mailto:bmtuer@gmail.com">email</a> · <a href="https://www.linkedin.com/in/bryantuer/" target="_blank" rel="noopener">LinkedIn →</a></span>
+      <span>Baltimore, MD</span>
+    </footer>
+  </div>
 
   <script src="js/main.js"></script>
 </body>

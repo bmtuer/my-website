@@ -1,24 +1,68 @@
-// ── Page transitions ──
-document.addEventListener('DOMContentLoaded', () => {
-  requestAnimationFrame(() => {
-    document.body.style.opacity = '1';
-  });
-});
+// ── Day / Night switch ──
+// The initial look is set by the inline script in each page's <head>
+// (saved choice → OS setting) so there's no flash. This just flips it.
+const root = document.documentElement;
+const lookSwitch = document.querySelector('.look-switch');
 
-document.querySelectorAll('a[href]').forEach(link => {
-  if (link.hostname !== window.location.hostname) return;
-  if (link.href === window.location.href) return;
+function syncLookSwitch() {
+  if (lookSwitch) lookSwitch.setAttribute('aria-checked', root.dataset.look === 'night' ? 'true' : 'false');
+}
+syncLookSwitch();
 
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    const href = link.href;
-    document.body.style.opacity = '0';
-    setTimeout(() => { window.location.href = href; }, 350);
+if (lookSwitch) {
+  lookSwitch.addEventListener('click', () => {
+    const next = root.dataset.look === 'night' ? 'day' : 'night';
+    const apply = () => { root.dataset.look = next; syncLookSwitch(); };
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (document.startViewTransition && !reduceMotion) document.startViewTransition(apply);
+    else apply();
+
+    try { localStorage.setItem('bt-look', next); } catch { /* private mode: look just won't persist */ }
   });
+}
+
+// ── Dithered photos (Night look) ──
+// Each <canvas class="dither" data-src> gets a 1-bit ordered (Bayer 4×4)
+// dither of its photo in amber. Drawn once on load; CSS decides whether
+// it's visible. data-x / data-y (0–1) set the crop focus like object-position.
+const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+
+document.querySelectorAll('canvas.dither').forEach(canvas => {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+  const fx = parseFloat(canvas.dataset.x || '0.5');
+  const fy = parseFloat(canvas.dataset.y || '0.5');
+
+  const img = new Image();
+  img.onload = () => {
+    const scale = Math.max(W / img.width, H / img.height);
+    const dw = img.width * scale;
+    const dh = img.height * scale;
+    ctx.drawImage(img, (W - dw) * fx, (H - dh) * fy, dw, dh);
+
+    let frame;
+    try { frame = ctx.getImageData(0, 0, W, H); } catch { return; } // file:// previews block pixel reads
+    const p = frame.data;
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        const i = (y * W + x) * 4;
+        const lum = Math.min(1, Math.pow((0.299 * p[i] + 0.587 * p[i + 1] + 0.114 * p[i + 2]) / 255, 0.8) * 1.15);
+        const on = lum > (BAYER[(y % 4) * 4 + (x % 4)] + 0.5) / 16;
+        p[i] = on ? 232 : 11;
+        p[i + 1] = on ? 176 : 12;
+        p[i + 2] = on ? 75 : 16;
+        p[i + 3] = 255;
+      }
+    }
+    ctx.putImageData(frame, 0, 0);
+  };
+  img.src = canvas.dataset.src;
 });
 
 // ── Contact form — AJAX submit with toast ──
-const contactForm = document.querySelector('.contact-form');
+const contactForm = document.querySelector('.note-form');
 if (contactForm) {
   contactForm.addEventListener('submit', async e => {
     e.preventDefault();
@@ -31,12 +75,12 @@ if (contactForm) {
       });
       if (res.ok) {
         contactForm.reset();
-        showToast('Message sent — I\'ll be in touch soon!');
+        showToast('Sent. I\'ll get back to you soon.');
       } else {
-        showToast('Something went wrong. Try emailing me directly.', true);
+        showToast('That didn\'t go through. Try emailing me directly.', true);
       }
     } catch {
-      showToast('Something went wrong. Try emailing me directly.', true);
+      showToast('That didn\'t go through. Try emailing me directly.', true);
     }
   });
 }
@@ -44,6 +88,7 @@ if (contactForm) {
 function showToast(message, isError = false) {
   const toast = document.createElement('div');
   toast.className = 'toast' + (isError ? ' toast-error' : '');
+  toast.setAttribute('role', 'status');
   toast.textContent = message;
   document.body.appendChild(toast);
   requestAnimationFrame(() => toast.classList.add('toast-visible'));
@@ -53,84 +98,35 @@ function showToast(message, isError = false) {
   }, 4000);
 }
 
-// Drag-to-scroll on the work timeline (desktop row layout only —
-// overflow-x is only active there; harmless no-op elsewhere since
-// scrollWidth won't exceed clientWidth on the tablet/phone vertical stack)
-const timelineTrack = document.querySelector('.timeline-track');
-if (timelineTrack) {
+// ── Drag-to-scroll on the work timeline (mouse only; touch scrolls natively) ──
+const track = document.querySelector('.track');
+if (track) {
   let isDown = false;
   let startX = 0;
   let startScroll = 0;
 
-  timelineTrack.addEventListener('mousedown', e => {
+  track.addEventListener('mousedown', e => {
+    if (track.scrollWidth <= track.clientWidth) return;
     isDown = true;
     startX = e.pageX;
-    startScroll = timelineTrack.scrollLeft;
+    startScroll = track.scrollLeft;
+    track.classList.add('is-dragging');
   });
 
-  window.addEventListener('mouseup', () => { isDown = false; });
+  window.addEventListener('mouseup', () => {
+    isDown = false;
+    track.classList.remove('is-dragging');
+  });
 
   window.addEventListener('mousemove', e => {
     if (!isDown) return;
     e.preventDefault();
-    timelineTrack.scrollLeft = startScroll - (e.pageX - startX);
+    track.scrollLeft = startScroll - (e.pageX - startX);
   });
-
-  // Edge fades + scroll buttons hinting there's more to scroll to — sized/
-  // positioned to match the track exactly (avoids hardcoding
-  // .timeline-header's height, which changes across breakpoints), shown/
-  // hidden based on scroll position.
-  const fadeLeft = document.querySelector('.timeline-fade-left');
-  const fadeRight = document.querySelector('.timeline-fade-right');
-  const btnLeft = document.querySelector('.timeline-scroll-btn-left');
-  const btnRight = document.querySelector('.timeline-scroll-btn-right');
-
-  if (fadeLeft && fadeRight && btnLeft && btnRight) {
-    const positionEdgeHints = () => {
-      const top = timelineTrack.offsetTop + 'px';
-      const height = timelineTrack.offsetHeight + 'px';
-      const centerY = timelineTrack.offsetTop + timelineTrack.offsetHeight / 2 + 'px';
-      fadeLeft.style.top = top;
-      fadeLeft.style.height = height;
-      fadeRight.style.top = top;
-      fadeRight.style.height = height;
-      btnLeft.style.top = centerY;
-      btnRight.style.top = centerY;
-    };
-
-    const updateEdgeHints = () => {
-      const hasOverflow = timelineTrack.scrollWidth > timelineTrack.clientWidth;
-      const atStart = timelineTrack.scrollLeft <= 0;
-      const atEnd = timelineTrack.scrollLeft + timelineTrack.clientWidth >= timelineTrack.scrollWidth - 1;
-      const showLeft = hasOverflow && !atStart;
-      const showRight = hasOverflow && !atEnd;
-      fadeLeft.classList.toggle('is-visible', showLeft);
-      fadeRight.classList.toggle('is-visible', showRight);
-      btnLeft.classList.toggle('is-visible', showLeft);
-      btnRight.classList.toggle('is-visible', showRight);
-    };
-
-    const scrollByOneCard = direction => {
-      const card = timelineTrack.querySelector('.timeline-item');
-      const step = card ? card.getBoundingClientRect().width : 260;
-      timelineTrack.scrollBy({ left: step * direction, behavior: 'smooth' });
-    };
-
-    btnLeft.addEventListener('click', () => scrollByOneCard(-1));
-    btnRight.addEventListener('click', () => scrollByOneCard(1));
-
-    positionEdgeHints();
-    updateEdgeHints();
-    timelineTrack.addEventListener('scroll', updateEdgeHints);
-    window.addEventListener('resize', () => {
-      positionEdgeHints();
-      updateEdgeHints();
-    });
-  }
 }
 
-// Scramble effect on nav links
-const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+// ── Scramble effect on nav links ──
+const chars = 'abcdefghijklmnopqrstuvwxyz';
 
 document.querySelectorAll('.nav-link').forEach(link => {
   const originalText = link.dataset.text;
@@ -138,21 +134,19 @@ document.querySelectorAll('.nav-link').forEach(link => {
   let iteration = 0;
 
   link.addEventListener('mouseenter', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     clearInterval(interval);
     iteration = 0;
 
     interval = setInterval(() => {
-      link.childNodes[0].nodeValue = originalText
+      link.textContent = originalText
         .split('')
-        .map((char, i) => {
-          if (i < iteration) return originalText[i];
-          return chars[Math.floor(Math.random() * chars.length)];
-        })
+        .map((char, i) => (i < iteration ? originalText[i] : chars[Math.floor(Math.random() * chars.length)]))
         .join('');
 
       if (iteration >= originalText.length) {
         clearInterval(interval);
-        link.childNodes[0].nodeValue = originalText;
+        link.textContent = originalText;
       }
 
       iteration += 0.4;
@@ -161,7 +155,6 @@ document.querySelectorAll('.nav-link').forEach(link => {
 
   link.addEventListener('mouseleave', () => {
     clearInterval(interval);
-    link.childNodes[0].nodeValue = originalText;
+    link.textContent = originalText;
   });
 });
-

@@ -3,87 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact — Bryan Tuer</title>
-  <meta name="description" content="Get in touch with Bryan Tuer — email, LinkedIn, or leave a note directly from the site." />
+  <title>Contact · Bryan Tuer</title>
+  <meta name="description" content="Get in touch with Bryan Tuer: email, LinkedIn, or leave a note directly from the site." />
   <link rel="canonical" href="https://bmtuer.com/contact.html" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Bryan Tuer" />
   <meta property="og:url" content="https://bmtuer.com/contact.html" />
-  <meta property="og:title" content="Contact — Bryan Tuer" />
-  <meta property="og:description" content="Get in touch with Bryan Tuer — email, LinkedIn, or leave a note directly from the site." />
+  <meta property="og:title" content="Contact · Bryan Tuer" />
+  <meta property="og:description" content="Get in touch with Bryan Tuer: email, LinkedIn, or leave a note directly from the site." />
   <meta property="og:image" content="https://bmtuer.com/assets/images/hero.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <meta name="color-scheme" content="light dark" />
+  <!-- Pick Day or Night before first paint: saved choice, else the OS setting. -->
+  <script>
+    (function () {
+      var look = null;
+      try { look = localStorage.getItem('bt-look'); } catch (e) {}
+      if (look !== 'day' && look !== 'night') {
+        look = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
+      }
+      document.documentElement.setAttribute('data-look', look);
+    })();
+  </script>
+
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="hero-page">
+<body>
+  <div class="page">
+    <header class="nav">
+      <a class="brand" href="index.html">Bryan Tuer <small>support ops · baltimore</small></a>
+      <div class="nav-right">
+        <nav aria-label="Pages"><ul class="nav-links">
+          <li><a href="index.html" class="nav-link" data-text="home">home</a></li>
+          <li><a href="work.html" class="nav-link" data-text="work">work</a></li>
+          <li><a href="life.html" class="nav-link" data-text="life">life</a></li>
+          <li><a href="contact.html" class="nav-link" data-text="contact" aria-current="page">contact</a></li>
+        </ul></nav>
+        <button class="look-switch" type="button" role="switch" aria-checked="false" aria-label="Night look">
+          <span class="look-day" aria-hidden="true">Day</span><span class="look-night" aria-hidden="true">Night</span>
+        </button>
+      </div>
+    </header>
 
-  <nav class="nav">
-    <a href="index.html" class="nav-name"><span class="nav-name-first">Bryan </span><span class="nav-name-last">Tuer</span></a>
-    <ul class="nav-links">
-      <li><a href="index.html" class="nav-link" data-text="Home">Home<span class="cursor">_</span></a></li>
-      <li><a href="work.html" class="nav-link" data-text="Work">Work<span class="cursor">_</span></a></li>
-      <li><a href="life.html" class="nav-link" data-text="Life">Life<span class="cursor">_</span></a></li>
-      <li><a href="contact.html" class="nav-link" data-text="Contact" aria-current="page">Contact<span class="cursor">_</span></a></li>
-    </ul>
-  </nav>
+    <main>
+      <div class="page-head">
+        <p class="label">Contact</p>
+        <h1 class="lede">Questions, support ops shop talk, or just saying hi.</h1>
+      </div>
+      <div class="contact">
+        <section class="direct" aria-labelledby="direct-label">
+          <h2 class="label" id="direct-label">Direct</h2>
+          <ul>
+            <li><a href="mailto:bmtuer@gmail.com">Email <span>bmtuer@gmail.com</span></a></li>
+            <li><a href="https://www.linkedin.com/in/bryantuer/" target="_blank" rel="noopener">LinkedIn <span>in/bryantuer →</span></a></li>
+          </ul>
+        </section>
 
-  <div class="bg-wrap">
-    <img src="assets/images/hero.jpg" alt="Baltimore rowhomes at sunset" class="hero-image" />
-    <div class="hero-overlay"></div>
-  </div>
-
-  <main class="content-wrap">
-    <div class="contact-outer">
-      <div class="contact-frosted"></div>
-      <div class="contact-card">
-
-        <div class="contact-header">
-          <h2 class="card-title">Contact</h2>
-        </div>
-
-        <div class="contact-body">
-
-          <div class="contact-links">
-            <a href="mailto:bmtuer@gmail.com" class="contact-link contact-link-email">
-              Email me <span class="contact-link-arrow">→</span>
-            </a>
-            <a href="https://www.linkedin.com/in/bryantuer/" target="_blank" class="contact-link contact-link-linkedin">
-              LinkedIn <span class="contact-link-arrow">→</span>
-            </a>
-          </div>
-
-          <p class="contact-form-heading">Leave a note</p>
-
-          <form class="contact-form" action="https://formspree.io/f/xdawbdeq" method="POST">
-            <div class="form-field">
+        <section aria-labelledby="note-label">
+          <h2 class="label sec-label" id="note-label">Leave a note</h2>
+          <form class="note-form" action="https://formspree.io/f/xdawbdeq" method="POST">
+            <div class="field">
               <label for="email">Your email</label>
-              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+              <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
             </div>
-            <div class="form-field">
+            <div class="field">
               <label for="subject">Subject</label>
               <input type="text" id="subject" name="subject" placeholder="What's on your mind?" required />
             </div>
-            <div class="form-field">
+            <div class="field">
               <label for="message">Message</label>
-              <textarea id="message" name="message" rows="4" placeholder="Say hello..." required></textarea>
+              <textarea id="message" name="message" rows="5" placeholder="Say hello..." required></textarea>
             </div>
-            <button type="submit" class="form-submit">Send it →</button>
+            <button type="submit" class="btn">Send it →</button>
           </form>
-
-        </div>
+        </section>
       </div>
-    </div>
-  </main>
+    </main>
 
-  <div class="hero-footer">
-    <span class="hero-credit">
-      <strong>Baltimore, MD</strong> — Photo by
-      <a href="https://unsplash.com/photos/a-view-of-a-city-skyline-at-sunset-XRwb892hC5U" target="_blank">Yianni Mathioudakis</a>
-      on Unsplash
-    </span>
+    <footer class="footer">
+      <span>Say hi: <a href="mailto:bmtuer@gmail.com">email</a> · <a href="https://www.linkedin.com/in/bryantuer/" target="_blank" rel="noopener">LinkedIn →</a></span>
+      <span>Baltimore, MD</span>
+    </footer>
   </div>
 
   <script src="js/main.js"></script>
