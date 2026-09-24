@@ -4,7 +4,7 @@
 
 ## What this is
 
-Bryan Tuer's personal website — a static, hand-written HTML/CSS/JS site (Home, Work, Play, Contact, no build step) doubling as an online portfolio for LinkedIn / job-world visibility. Currently a design-driven project; Bryan is happy in his current job and using this as a creative outlet.
+Bryan Tuer's personal website — a static, hand-written HTML/CSS/JS single-page site (Home, Work, Life, Contact sections in `index.html`, switchable Day / Night looks, no build step) doubling as an online portfolio for LinkedIn / job-world visibility. Currently a design-driven project; Bryan is happy in his current job and using this as a creative outlet.
 
 ## Where to look
 

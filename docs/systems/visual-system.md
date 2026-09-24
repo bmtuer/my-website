@@ -18,7 +18,8 @@ The Night look borrows terminal *visuals* only. Copy stays in plain English: no 
 - **All visual rules:** `css/style.css` (single file, no build step)
 - **Look switch, dither, form, drag-scroll, nav scramble:** `js/main.js`
 - **Initial look (no-flash):** inline `<script>` in every page's `<head>`
-- **Pages:** `index.html`, `work.html`, `life.html`, `contact.html`
+- **The site:** `index.html` — one page with four sections: `#top` (hero), `#work`, `#life`, `#contact`
+- **Old URLs:** `work.html`, `life.html`, `contact.html` are redirect stubs to `index.html#work` / `#life` / `#contact` (meta refresh + `location.replace`, `noindex`, canonical to the anchor). Keep them so old links from LinkedIn/search still land.
 - **Fonts:** Google Fonts `<link>` in each page's `<head>` (Geist 400/500/600, Geist Mono 400/500, JetBrains Mono 400/500/700)
 
 ## How the look is chosen
@@ -30,7 +31,6 @@ The Night look borrows terminal *visuals* only. Copy stays in plain English: no 
 3. The flip is wrapped in `document.startViewTransition()` when available and reduced motion is off. Otherwise it's instant.
 4. With JS off entirely, `:root:not([data-look])` + `prefers-color-scheme: dark` swaps colors only (structure stays Day).
 
-**Every page's `<head>` script must stay identical.** If you change the storage key or logic, change all four pages.
 
 ## Tokens
 
@@ -76,7 +76,8 @@ Tokens handle color and type. Where the two looks differ in *structure*, a `[dat
 
 ## Motion
 
-- **Page-to-page:** CSS `@view-transition { navigation: auto; }`. The nav has `view-transition-name: nav` so it stays still while content crossfades. Browsers without support just navigate normally.
+- **Nav jumps:** the nav is `position: sticky`; links are in-page anchors with `scroll-behavior: smooth`. `html { scroll-padding-top }` is tuned so a section's label lands ~24px below the nav (20px desktop, 64px under 760px where the nav wraps to two rows). If the nav height or `.section` padding changes, retune it.
+- **Scroll-spy:** an IntersectionObserver in `js/main.js` sets `aria-current` on the nav link for the section crossing ~35% down the viewport; at the very bottom of the page the last section (Contact) wins.
 - **Look switch:** same-document View Transition (see above).
 - **Cursor:** blinking block after the home statement, Night only.
 - **Nav scramble:** letters scramble on hover (`js/main.js`), skipped under reduced motion.
@@ -84,11 +85,11 @@ Tokens handle color and type. Where the two looks differ in *structure*, a `[dat
 
 ## Layout
 
-- `.page` is a centered 1160px column, 24px gutters (16px under 760px), a flex column so the footer sits at the bottom of short pages.
+- `.page` is a centered 1160px column, 24px gutters (16px under 760px). Sections after the hero are `.section` (72px top padding, 56px on phones) with a `.section-head` (label + `.lede`).
 - Under 760px: hero stacks to one column, the Life grid goes to two columns, contact stacks, and the nav puts name + switch on one row and links below.
 - The Work timeline stays horizontal at every width (`overflow-x: auto`, drag-to-scroll with a mouse). This was a deliberate call; don't switch it to a vertical stack.
 
 ## Known gaps
 
-- Photos are 1–3 MB originals and are loaded on every page that uses them (and decoded again for the dither).
+- Photos are 1–3 MB originals, all on one page now (Life photos use `loading="lazy"`, but the dither script still fetches every photo on load).
 - The Life label says "hover a photo" even on touch devices. Tapping does work via sticky hover.

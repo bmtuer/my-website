@@ -125,6 +125,34 @@ if (track) {
   });
 }
 
+// ── Scroll-spy: highlight the nav link for the section in view ──
+const navLinks = [...document.querySelectorAll('.nav-link')];
+const sections = navLinks
+  .map(link => document.querySelector(link.getAttribute('href')))
+  .filter(Boolean);
+
+function markCurrent(id) {
+  navLinks.forEach(link => {
+    if (link.getAttribute('href') === '#' + id) link.setAttribute('aria-current', 'true');
+    else link.removeAttribute('aria-current');
+  });
+}
+
+if (sections.length && 'IntersectionObserver' in window) {
+  // A section counts as "current" once it crosses a line ~35% down the viewport.
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) markCurrent(entry.target.id); });
+  }, { rootMargin: '-35% 0px -64% 0px' });
+  sections.forEach(section => spy.observe(section));
+
+  // The last section may be too short to reach that line; mark it at the bottom of the page.
+  window.addEventListener('scroll', () => {
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+      markCurrent(sections[sections.length - 1].id);
+    }
+  }, { passive: true });
+}
+
 // ── Scramble effect on nav links ──
 const chars = 'abcdefghijklmnopqrstuvwxyz';
 

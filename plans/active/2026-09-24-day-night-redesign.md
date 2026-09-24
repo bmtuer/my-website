@@ -16,11 +16,12 @@ The Warm Ink look (cream, maroon, coral, frosted glass, Bungee nameplate, center
 - [x] First-time visitors get the look matching their OS light/dark setting
 - [x] No flash of the wrong look on page load (look is set by an inline `<head>` script before first paint)
 - [x] Switching animates via the View Transitions API (crossfade + home hero blocks morph into their new positions); instant switch when unsupported or with `prefers-reduced-motion`
-- [x] Page-to-page navigation uses cross-document view transitions (nav stays put, content crossfades) instead of the old JS opacity fade
+- [x] Site is a single page (`index.html`) with Home / Work / Life / Contact sections; the sticky nav jumps to each and highlights the section in view
+- [x] Old `work.html` / `life.html` / `contact.html` URLs redirect to the matching section
 - [x] Night photos are amber-dithered at rest and reveal the real photo on hover/focus; Day photos are grayscale at rest and reveal color on hover/focus
 - [x] Work timeline stays horizontal at every width, with drag-to-scroll on desktop
 - [x] Contact form still posts to Formspree via AJAX with a toast, styled in both looks
-- [x] No page scrolls horizontally at 375px width
+- [x] Nothing scrolls horizontally at 375px width
 - [x] Page titles/meta no longer call Bryan a "leader" or "team lead"
 
 ## Changes by area
@@ -31,10 +32,11 @@ Full rewrite. Day tokens on `:root`, Night tokens on `:root[data-look="night"]`,
 ### Scripts (`js/main.js`)
 - Add: look switch (View Transitions + localStorage), dither renderer for `canvas.dither`
 - Keep: contact form AJAX + toast, timeline drag-to-scroll, nav scramble on hover
-- Remove: body opacity page-fade (replaced by CSS `@view-transition`), timeline edge fades/scroll buttons (tied to the old card layout)
+- Add: scroll-spy for the nav
+- Remove: body opacity page-fade, timeline edge fades/scroll buttons (tied to the old card layout)
 
 ### Pages
-All four pages share a new shell: inline look script in `<head>`, nav with the switch, `<main>`, footer. Content ported from the prototype; copy is placeholder-quality and will get a full rework from Bryan separately.
+Single page: `index.html` holds all four sections behind a sticky nav with the switch. `work.html`, `life.html`, `contact.html` become redirect stubs. Content ported from the prototype; copy will get a full rework from Bryan separately.
 
 ### Assets
 `favicon.svg` recolored to the new palette.
@@ -45,7 +47,6 @@ Static site, one feature branch. Revert the branch's commits (or don't merge) to
 ## Deferred (intentional cuts)
 - **Content/wording rework.** Bryan is rewriting fields and copy himself; this pass only fixes the "leader"/"team lead" framing and removes invented details.
 - **Image weight.** Photos are 1-3 MB originals. Resizing/compressing is worth doing but is separate from the redesign.
-- **Single-page layout.** The prototype was one scrolling page; this keeps the existing four pages.
 
 ## System doc impact
 `docs/systems/visual-system.md` is rewritten to describe the Day/Night system.
@@ -64,7 +65,8 @@ Static site, one feature branch. Revert the branch's commits (or don't merge) to
 
 **Shipped:**
 - Four direction mockups → narrowed to A (spec sheet) + B1 (terminal look, plain words) → Day/Night prototype approved
-- Full rebuild of all four pages, CSS and JS on the Day/Night system (see acceptance criteria)
+- Full rebuild of CSS and JS on the Day/Night system (see acceptance criteria)
+- First built as four pages, then switched to a single page at Bryan's call (matches the prototype); old page URLs kept as redirects
 
 **Didn't ship / blocked:**
 - Content rework (Bryan's, next)
