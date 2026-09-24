@@ -39,7 +39,7 @@ Every roadmap item carries three orthogonal tags: **Workstream** (where the work
 
 ### P1 — Core deliverables within milestone
 
-- **Day / Night redesign** `feature` [milestone: Day / Night Redesign] — Replace Warm Ink with two switchable looks (Day spec sheet, Night terminal) from one set of HTML. Plan: `plans/active/2026-09-24-day-night-redesign.md`.
+*(None.)*
 
 ### P2 — Round-out within milestone
 
@@ -59,7 +59,7 @@ Every roadmap item carries three orthogonal tags: **Workstream** (where the work
 
 ### P1 — Core deliverables within milestone
 
-- **Content rework for Day / Night** `content` [milestone: Day / Night Redesign] — Bryan rewrites fields and copy (intro, quick facts, role blurbs, Life cells, meta) for the new design.
+*(None.)*
 
 ### P2 — Round-out within milestone
 

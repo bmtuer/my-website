@@ -4,7 +4,7 @@
 - [ ] Drafting
 - [x] Approved to start
 - [x] In progress
-- [ ] Shipped
+- [x] Shipped
 - [ ] Cancelled
 
 ## Problem
@@ -77,3 +77,16 @@ Static site, one feature branch. Revert the branch's commits (or don't merge) to
 
 **Next session's first move:**
 - Bryan reviews the branch, then content rework
+
+### Session 2 — 2026-09-24
+**Goal:** Content pass, fix the nav, merge, then a mobile pass.
+
+**Shipped:**
+- Bryan's content pass (intro, quick facts, role blurbs, rebrand footnote, Life copy, compact contact form, footer copyright)
+- Life photos: portrait crops with per-photo focus, per-photo hover, tap-to-reveal on touch, sharper dither
+- Nav: jumps land as far as the page allows (no filler under Contact), click-sticky scroll-spy, Night marker no longer shifts links
+- Merged in bmtuer/my-website#1
+- Mobile pass (follow-up PR): one-row nav, 40px tap targets, 16px form fields (no iOS zoom), snapping Work cards, full-width text tiles on phones, 4-column Life in landscape
+
+**Tech debt introduced:**
+- None new beyond Session 1's notes (photo weight, dither on every load)

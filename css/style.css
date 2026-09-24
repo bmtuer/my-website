@@ -510,10 +510,27 @@ button, input, textarea { font: inherit; color: inherit; }
 @media (max-width: 760px) {
   .page { padding-inline: 16px; }
 
-  /* Nav: name + switch on one row, page links on the next */
-  .nav-right { display: contents; }
-  .look-switch { order: 2; }
-  .nav nav { order: 3; width: 100%; }
+  /* Nav: one compact row. The name doubles as "home", so the home link hides. */
+  .nav { flex-wrap: nowrap; gap: 12px; padding-block: 10px; }
+  .nav-right { flex-wrap: nowrap; gap: 12px; }
+  .nav-links { gap: 2px; }
+  .nav-links li:first-child { display: none; }
+  .nav-link { display: inline-block; padding: 10px 6px; }  /* ~40px tap target */
+  /* No room for Night's ">" marker in the compact nav; amber alone marks the current link */
+  [data-look="night"] .nav-link[aria-current]::before { content: none; }
+  .brand { padding-block: 10px; }
+  .look-switch span { padding: 5px 9px; }
+
+  /* Touch-friendly links */
+  .cell-link, .footer a { display: inline-block; padding-block: 8px; }
+  .hero-photo figcaption a { display: inline-block; padding-block: 6px; }
+
+  /* iOS zooms into any field under 16px; keep the page still */
+  .field input, .field textarea { font-size: 16px; }
+
+  /* Work: wider cards that snap, with the next one peeking in */
+  .track { grid-auto-columns: 78%; scroll-snap-type: x mandatory; scroll-padding-inline: 0; }
+  .job { scroll-snap-align: start; }
 
   .hero,
   [data-look="night"] .hero { grid-template-columns: 1fr; grid-template-rows: none; grid-template-areas: "intro" "facts" "photo"; }
@@ -525,7 +542,7 @@ button, input, textarea { font: inherit; color: inherit; }
   [data-look="night"] .hero-photo .pic { min-height: 240px; }
   [data-look="night"] .hero-photo figcaption { padding-inline: 0; }
 
-  html { scroll-padding-top: 64px; } /* nav wraps to two rows (~99px); sections pad 56px */
+  html { scroll-padding-top: 28px; } /* one-row nav (~60px); sections pad 56px → label ~24px below nav */
   .section { padding-top: 56px; }
 
   .life-grid { grid-template-columns: 1fr 1fr; }
@@ -533,8 +550,30 @@ button, input, textarea { font: inherit; color: inherit; }
   .note-form { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 420px) {
-  .nav-links { gap: 14px; }
+/* Phones: text-only Life tiles get the full width so they aren't 5-line slivers */
+@media (max-width: 480px) {
+  .cell:not(.reveal) { grid-column: 1 / -1; }
+}
+
+/* Landscape phones / small tablets: keep Life photos from blowing up */
+@media (min-width: 540px) and (max-width: 760px) {
+  .life-grid { grid-template-columns: repeat(4, 1fr); }
+  .cell:not(.reveal) { grid-column: span 2; }
+  .cell.wide:not(.reveal) { grid-column: 1 / -1; }
+}
+
+/* 360–400px phones (iPhone mini/SE): tighten the one-row nav so it fits */
+@media (max-width: 400px) {
+  .nav, .nav-right { gap: 8px; }
+  .nav-link { padding-inline: 4px; }
+  .look-switch span { padding: 5px 7px; }
+}
+
+/* Very narrow (320px) screens: let the nav wrap to two rows rather than crush */
+@media (max-width: 359px) {
+  .nav { flex-wrap: wrap; }
+  .nav-right { width: 100%; justify-content: space-between; }
+  html { scroll-padding-top: 64px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

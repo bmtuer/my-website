@@ -6,12 +6,11 @@ When a sprint closes, clear this file and pull the next batch. Shipped items don
 
 ## Sprint theme
 
-**Day / Night Redesign.** Move off the preppy Warm Ink look to two switchable looks that read savvy, not flashy.
+*(Sprint cleared — Day / Night redesign shipped 2026-09-24. Next sprint to be themed when the next batch of work is queued up.)*
 
 ## Active
 
-- **Day / Night redesign** (Design, P1). Plan: `plans/active/2026-09-24-day-night-redesign.md`. Built on branch, awaiting Bryan's review.
-- **Content rework** (Content, P1). Bryan's, after the redesign lands.
+*(None.)*
 
 ## Blocked / carry-over (long-running)
 
@@ -20,6 +19,12 @@ When a sprint closes, clear this file and pull the next batch. Shipped items don
 ---
 
 ## Last cleared
+
+### Sprint: Day / Night Redesign — closed 2026-09-24
+
+Replaced the "preppy" Warm Ink look with a single-page site in two switchable looks from one set of HTML: Day (spec sheet: Geist, hairline grid, cobalt, grayscale photos) and Night (terminal visuals, plain-English copy: JetBrains Mono, amber, dithered photos). View-transition look switch that persists and follows the OS setting, sticky nav with scroll-spy, old page URLs kept as redirects, Bryan's full content pass, and a mobile pass (one-row nav, tap targets, no iOS input zoom, snapping Work cards).
+
+Plan (in `plans/shipped/`): `2026-09-24-day-night-redesign.md`. System doc: `docs/systems/visual-system.md`.
 
 ### Sprint: Design Uplift v2 — closed 2026-09-19
 

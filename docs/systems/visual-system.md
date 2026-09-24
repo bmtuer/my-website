@@ -11,7 +11,7 @@ One set of HTML, two looks. A visitor flips between them with the **Day / Night*
 - **Day** is a spec sheet: Geist + Geist Mono, graphite on off-white, hairline grid, cobalt accent, grayscale photos that color in on hover.
 - **Night** is a terminal look: JetBrains Mono everywhere, near-black ground, amber accent, blue keys, bordered panels, and photos rendered as 1-bit amber dithers that reveal the real photo on hover.
 
-The Night look borrows terminal *visuals* only. Copy stays in plain English: no fake commands, file names, commit hashes or YAML. The blinking cursor and the `>` on the current nav link are the only terminal nods. (Earlier mockups with `$ whoami` / `cat ./about.yml` read as posing; see `plans/active/2026-09-24-day-night-redesign.md`.)
+The Night look borrows terminal *visuals* only. Copy stays in plain English: no fake commands, file names, commit hashes or YAML. The blinking cursor and the `>` on the current nav link are the only terminal nods. (Earlier mockups with `$ whoami` / `cat ./about.yml` read as posing; see `plans/shipped/2026-09-24-day-night-redesign.md`.)
 
 ## Where the code lives
 
@@ -94,6 +94,10 @@ Tokens handle color and type. Where the two looks differ in *structure*, a `[dat
 
 - `.page` is a centered 1160px column, 24px gutters (16px under 760px). Sections after the hero are `.section` (72px top padding, 56px on phones) with a `.section-head` (label + `.lede`).
 - Under 760px: hero stacks to one column, the Life grid goes to two columns, contact stacks, and the nav puts name + switch on one row and links below.
+- **Phones (≤760px):** the nav is one ~64px row: name (which doubles as "home", so the home link hides), work / life / contact, and the switch. Links get ~40px tap targets. Night's `>` marker is dropped there (no room); amber alone marks the current link. Below 360px the nav wraps to two rows; 360–400px tightens the spacing so it fits.
+- **Form fields are 16px on phones** so iOS doesn't zoom in when you tap them.
+- **Work on phones:** cards are 78% wide and snap (`scroll-snap-type: x mandatory`), with the next card peeking in.
+- **Life on phones:** photo tiles stay two-up; text tiles (Music, Video games, Also into) go full width under 480px. Landscape phones (540–760px) switch back to four columns so photos don't blow up.
 - The Work timeline stays horizontal at every width (`overflow-x: auto`, drag-to-scroll with a mouse). This was a deliberate call; don't switch it to a vertical stack.
 
 ## Known gaps
